@@ -41,7 +41,7 @@ class ModelController:
             return False
 
         self.__model_lists.append(model_name)
-        self.__update_cur_model_file_name(len(self.__model_lists))
+        self.__update_cur_model_file_name(len(self.__model_lists) - 1)
 
     def get_cur_focus_model_name(self):
         return self.__model

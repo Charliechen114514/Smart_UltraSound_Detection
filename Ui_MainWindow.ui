@@ -86,7 +86,7 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="imports">
           <property name="geometry">
@@ -94,12 +94,74 @@
             <x>0</x>
             <y>0</y>
             <width>182</width>
-            <height>491</height>
+            <height>461</height>
            </rect>
           </property>
           <attribute name="label">
            <string>导入</string>
           </attribute>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QWidget" name="widget" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <widget class="QPushButton" name="btn_load_pictures">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>添加图片</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_load_models">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>添加模型</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="recognize_page">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>182</width>
+            <height>461</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>开始识别</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QPushButton" name="btn_start_recognize">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>开始识别</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -129,8 +191,22 @@
      <string>查看</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>信息</string>
+    </property>
+    <addaction name="action_showInfo"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>开始识别</string>
+    </property>
+    <addaction name="action_recognize_depatch"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_select_model">
@@ -141,6 +217,16 @@
   <action name="action_load_images">
    <property name="text">
     <string>导入图像</string>
+   </property>
+  </action>
+  <action name="action_showInfo">
+   <property name="text">
+    <string>查看当前状态</string>
+   </property>
+  </action>
+  <action name="action_recognize_depatch">
+   <property name="text">
+    <string>开始识别</string>
    </property>
   </action>
  </widget>
