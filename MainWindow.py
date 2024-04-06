@@ -157,11 +157,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def show_current_state(self):
         pic_size = self.__image_manager.get_current_size()
+        cur_pic_info= self.__image_manager.get_cur_description_text()
         model_path = self.__model_manager.get_cur_focus_model_name()
         if pic_size == 0:
             pics_info = "当前没有图片！\n"
         else:
-            pics_info = "图片共计: " + str() + "张\n"
+            pics_info = cur_pic_info + "\n"
         if model_path == "":
             model_info = "当前没有加载任何模型！\n"
         else:

@@ -7,6 +7,7 @@ class ReminderWindow(QWidget):
         super().__init__(parent)
         self.__UI = reminderprocesswindow.Ui_ReminderProcessWindow()
         self.__UI.setupUi(self)
+        self.setWindowTitle("结果浏览")
         self.cur = 0
         self.total = 0
         # 设置进度条的范围

@@ -110,4 +110,10 @@ class ImageBrowserUiManager:
         return self.__core.get_index_by_file_name(file_name)
 
     def get_cur_description_text(self):
-        return "当前你正在浏览第" + str(self.get_current_focus_index() + 1) + "张图片，共: " + str(self.__core.get_cur_size()) + "张"
+        if self.__core.get_cur_size() == 0:
+            return ""
+        else:
+            return \
+                "当前你正在浏览第" + str(self.get_current_focus_index() + 1) + "张图片，共: " + \
+                str(self.__core.get_cur_size()) + "张\n" + "图像地址: " + \
+                self.__core.get_images_lists()[self.get_current_focus_index()] + "\n"
