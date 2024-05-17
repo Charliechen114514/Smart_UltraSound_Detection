@@ -17,7 +17,7 @@ class Ui_ReminderProcessWindow(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.sthFunShow = QtWidgets.QTextBrowser(parent=ReminderProcessWindow)
         font = QtGui.QFont()
-        font.setPointSize(26)
+        font.setPointSize(13)
         self.sthFunShow.setFont(font)
         self.sthFunShow.setObjectName("sthFunShow")
         self.verticalLayout_2.addWidget(self.sthFunShow)

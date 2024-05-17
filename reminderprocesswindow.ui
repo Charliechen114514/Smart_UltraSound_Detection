@@ -18,7 +18,7 @@
     <widget class="QTextBrowser" name="sthFunShow">
      <property name="font">
       <font>
-       <pointsize>26</pointsize>
+       <pointsize>13</pointsize>
       </font>
      </property>
     </widget>

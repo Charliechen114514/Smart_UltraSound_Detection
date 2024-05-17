@@ -46,7 +46,6 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.image_label.sizePolicy().hasHeightForWidth())
         self.image_label.setSizePolicy(sizePolicy)
         self.image_label.setAutoFillBackground(True)
-        self.image_label.setText("")
         self.image_label.setScaledContents(True)
         self.image_label.setObjectName("image_label")
         self.gridLayout.addWidget(self.image_label, 0, 0, 1, 1)
@@ -131,6 +130,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.image_label.setText(_translate("MainWindow", "请导入图像"))
         self.btn_load_pictures.setText(_translate("MainWindow", "添加图片"))
         self.btn_load_models.setText(_translate("MainWindow", "添加模型"))
         self.operatorBox.setItemText(self.operatorBox.indexOf(self.imports), _translate("MainWindow", "导入"))

@@ -55,7 +55,7 @@
              <bool>true</bool>
             </property>
             <property name="text">
-             <string/>
+             <string>请导入图像</string>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
