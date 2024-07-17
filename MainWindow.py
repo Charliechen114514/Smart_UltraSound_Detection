@@ -1,6 +1,7 @@
 from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtCore import Qt, QFile
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
+from Audio.AudioServerControl import AudioServer
 import Ui_MainWindow
 from ImageBrowser.ImageBrowseUiManager import ImageBrowserUiManager
 from ModelController.ModelController import ModelController
@@ -16,6 +17,8 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         # Do things here when init
         super().__init__(parent)
+        self.audioServer = AudioServer(self)
+        self.control_Audio_state = False
         self.reportGenerator = ReportGenerator()
         self.model_executor = None
         self.__UI = Ui_MainWindow.Ui_MainWindow()
@@ -27,6 +30,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.__init_connections()
         self.__load_base_ui()
         self.reminder_window = ReminderWindow()
+
 
     def __load_base_ui(self):
         # Window_Name
@@ -68,6 +72,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.__UI.btn_start_recognize.clicked.connect(self.make_recognize)
         self.__UI.action_showInfo.triggered.connect(self.show_current_state)
         self.__UI.action_recognize_depatch.triggered.connect(self.make_recognize)
+        self.__UI.btn_audioServer.clicked.connect(self.handle_audio_button_slot)
+        self.audioServer.signal_tell_recognize.connect(self.handle_audio_result_slot)
 
     def __check_and_reject_null_image_browser(self):
         if self.__image_manager.get_current_size() == 0:
@@ -174,3 +180,16 @@ class MainWindow(QtWidgets.QMainWindow):
     def keyPressEvent(self, key_env: QtGui.QKeyEvent):
         self.__handle_image_browser_event(key_env)
         self.__handle_ui_show_event(key_env)
+
+    def handle_audio_button_slot(self):
+        self.control_Audio_state = not self.control_Audio_state
+        if self.control_Audio_state:
+            self.audioServer.start_recording()
+            self.__UI.btn_audioServer.setText("结束语音识别")
+        else:
+            self.audioServer.stop_recording()
+            self.__UI.btn_audioServer.setText("开始语音识别")
+
+
+    def handle_audio_result_slot(self, result: str):
+        self.__UI.audioGet_lineEdit.setText("识别内容: " + result)

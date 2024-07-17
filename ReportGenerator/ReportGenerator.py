@@ -26,7 +26,7 @@ class ReportGenerator:
     def generate_report(self):
         res = str()
         for each_res, each_pic_res in zip(self.raw_res, self.raw_pic_path):
-            res += "图片路径:> " + each_pic_res + "是" + is_valid(each_res) + "的\n"
+            res += "图片路径:> " + each_pic_res + "，其诊断结果为：" + is_valid(each_res) + "\n"
         self.report = res
         return res
 
