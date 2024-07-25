@@ -7,8 +7,11 @@ from ImageBrowser.ImageBrowseUiManager import ImageBrowserUiManager
 from ModelController.ModelController import ModelController
 from FileViewManager.FileViewManager import FileViewManager
 from ModelUsing.ModelExecutor import ModelExecutor
+from Utils.Utils import Software_Utils
 from WaitingProcessBar.WaitingWidget import ReminderWindow
 from ReportGenerator.ReportGenerator import ReportGenerator
+from DetectWave.detectWave_BackEnd import ImageWavePraser
+
 control_modifier = Qt.KeyboardModifier.ControlModifier
 shift_modifier = Qt.KeyboardModifier.ShiftModifier
 
@@ -23,6 +26,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.model_executor = None
         self.__UI = Ui_MainWindow.Ui_MainWindow()
         self.__UI.setupUi(self)
+        self.waveDetector = ImageWavePraser()
+        self.waveDetector.set_write_path("../result/")
+        Software_Utils.createDirentAnyway("../result/")
         # Info the Image Browser Manager
         self.__image_manager = ImageBrowserUiManager(self.__UI.image_label)
         self.__model_manager = ModelController()
@@ -102,13 +108,8 @@ class MainWindow(QtWidgets.QMainWindow):
         files = results[0]
         if len(files) == 0:
             return
-        state, failed = self.__image_manager.push_back_paths(files)
-        if not state:
-            for each_failed in failed:
-                QMessageBox.critical(self, "出错了！", "抱歉！无法加载路径：" + each_failed + "!")
-        self.__switch_by_index(self.__image_manager.get_current_size() - 1)
-        self.__file_view_manager.flush_file_names(self.__image_manager.get_images_file_name())
-        return
+        for file in files:
+            self.__do_wave_detect(file)
 
     def switch_to_by_file_name(self):
         item = self.__UI.fileListsWidget.selectedItems()[0]
@@ -153,13 +154,15 @@ class MainWindow(QtWidgets.QMainWindow):
             QMessageBox(self, "发生图片加载错误", self.model_executor.make_inform_faults(faults))
             return
         self.reminder_window.show()
-        self.reportGenerator.set_res(res, self.__image_manager.get_images_raw_file_name())
+        self.reportGenerator.handle_raw_res(res, self.__image_manager.get_images_raw_file_name())
         is_valid, descriptions = self.reportGenerator.check_valid()
         if not is_valid:
             QMessageBox.critical(self, "发生错误", descriptions)
             return
         self.reminder_window.set_show_text(self.reportGenerator.generate_report())
         self.reportGenerator.show_for_file()
+        self.reportGenerator.make_all_clear()
+        self.reminder_window.activateWindow()
 
     def show_current_state(self):
         pic_size = self.__image_manager.get_current_size()
@@ -190,6 +193,23 @@ class MainWindow(QtWidgets.QMainWindow):
             self.audioServer.stop_recording()
             self.__UI.btn_audioServer.setText("开始语音识别")
 
+    def __do_wave_detect(self, files: str):
+        self.waveDetector.set_file_name(Software_Utils.get_file_name_accord_path(files))
+        self.waveDetector.analysis_image(files)
+        res_of_file = self.waveDetector.get_init_paths()
+        if len(res_of_file) == 0:
+            QMessageBox.critical(self,"分析异常", "图像:> " + files + "没有办法检测到单个波形！采用全局分析")
+            res = list()
+            res.append(files)
+            state, failed = self.__image_manager.push_back_paths(res)
+        else:
+            state, failed = self.__image_manager.push_back_paths(res_of_file)
+        if not state:
+            for each_failed in failed:
+                QMessageBox.critical(self, "出错了！", "抱歉！无法加载路径：" + each_failed + "!")
+        self.waveDetector.clear_res()
+        self.__switch_by_index(self.__image_manager.get_current_size() - 1)
+        self.__file_view_manager.flush_file_names(self.__image_manager.get_images_file_name())
 
     def handle_audio_result_slot(self, result: str):
         self.__UI.audioGet_lineEdit.setText("识别内容: " + result)

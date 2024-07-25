@@ -14,7 +14,7 @@ class ImageBrowserUiManager:
     def __init__(self, label: QLabel):
         self.__core = ImageBrowseCore()
         self.__handling_label = label
-        self.__suffix_controller = ['png', 'jpeg', 'jpg']
+        self.__suffix_controller = ['jpg', 'png', 'jpeg']
 
     def get_suffix_logger(self):
         res = str()
