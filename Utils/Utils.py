@@ -1,7 +1,11 @@
-from PyQt6.QtCore import QFileInfo, QDir
-
+from PyQt6.QtCore import QFileInfo, QDir, QFile
+import os
 
 class Software_Utils:
+    @staticmethod
+    def is_file_exist(path: str):
+        return os.path.exists(path)
+
     @staticmethod
     def get_file_name_accord_path(path: str):
         f = QFileInfo(path)
@@ -46,3 +50,8 @@ class Software_Utils:
             return 1
         else:
             return 0
+
+
+    @staticmethod
+    def from_rela_path_to_abs_path(res: str):
+        return os.path.abspath(res)

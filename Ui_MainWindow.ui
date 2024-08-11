@@ -86,15 +86,15 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="imports">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>111</width>
-            <height>142</height>
+            <width>182</width>
+            <height>492</height>
            </rect>
           </property>
           <attribute name="label">
@@ -140,8 +140,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>68</height>
+            <width>182</width>
+            <height>492</height>
            </rect>
           </property>
           <attribute name="label">
@@ -169,7 +169,7 @@
             <x>0</x>
             <y>0</y>
             <width>182</width>
-            <height>522</height>
+            <height>492</height>
            </rect>
           </property>
           <attribute name="label">
@@ -207,6 +207,26 @@
               </item>
              </layout>
             </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_2">
+          <attribute name="label">
+           <string>图像识别</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>识别参数结果</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="OCR_Result_Recognizer"/>
            </item>
           </layout>
          </widget>

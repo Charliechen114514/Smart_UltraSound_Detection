@@ -56,3 +56,7 @@
 ​	保证图像和模型导入结束后，方可点击开始训练按钮或者是点击菜单栏上的开始训练，稍等片刻即可询问保存位置，确定保存位置后看可以在文本框中浏览结果
 
 ![image-20240406194445487](./docs/image-20240406194445487.png)
+
+## 可能出现的错误
+
+pytesseract.pytesseract.TesseractNotFoundError: tesseract is not installed or it's not in your PATH：请搜索如何下载Tesseract并保证自己可以在cmd命令行中使用。然后重启软件和（如果您是开发者，使用Python环境时也需要重启IDE）尝试

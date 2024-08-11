@@ -11,6 +11,8 @@ from Utils.Utils import Software_Utils
 from WaitingProcessBar.WaitingWidget import ReminderWindow
 from ReportGenerator.ReportGenerator import ReportGenerator
 from DetectWave.detectWave_BackEnd import ImageWavePraser
+from OCR.TextRecognizer import TextRecognizer
+
 
 control_modifier = Qt.KeyboardModifier.ControlModifier
 shift_modifier = Qt.KeyboardModifier.ShiftModifier
@@ -36,7 +38,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.__init_connections()
         self.__load_base_ui()
         self.reminder_window = ReminderWindow()
-
 
     def __load_base_ui(self):
         # Window_Name
@@ -113,7 +114,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def switch_to_by_file_name(self):
         item = self.__UI.fileListsWidget.selectedItems()[0]
-        file_name = item.text()
+        file_name = item.all_text()
         index = self.__image_manager.get_index_by_file_name(file_name)
         if index == -1:
             QMessageBox.critical(self, "没找到！", "尚未找到目标文件，检查是否文件移动！")
@@ -166,7 +167,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def show_current_state(self):
         pic_size = self.__image_manager.get_current_size()
-        cur_pic_info= self.__image_manager.get_cur_description_text()
+        cur_pic_info = self.__image_manager.get_cur_description_text()
         model_path = self.__model_manager.get_cur_focus_model_name()
         if pic_size == 0:
             pics_info = "当前没有图片！\n"
@@ -193,14 +194,14 @@ class MainWindow(QtWidgets.QMainWindow):
             self.audioServer.stop_recording()
             self.__UI.btn_audioServer.setText("开始语音识别")
 
-    def __do_wave_detect(self, files: str):
-        self.waveDetector.set_file_name(Software_Utils.get_file_name_accord_path(files))
-        self.waveDetector.analysis_image(files)
+    def __do_wave_detect(self, file: str):
+        self.waveDetector.set_file_name(Software_Utils.get_file_name_accord_path(file))
+        self.waveDetector.analysis_image(file)
         res_of_file = self.waveDetector.get_init_paths()
         if len(res_of_file) == 0:
-            QMessageBox.critical(self,"分析异常", "图像:> " + files + "没有办法检测到单个波形！采用全局分析")
+            QMessageBox.critical(self, "分析异常", "图像:> " + file + "没有办法检测到单个波形！采用全局分析")
             res = list()
-            res.append(files)
+            res.append(file)
             state, failed = self.__image_manager.push_back_paths(res)
         else:
             state, failed = self.__image_manager.push_back_paths(res_of_file)
@@ -210,6 +211,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.waveDetector.clear_res()
         self.__switch_by_index(self.__image_manager.get_current_size() - 1)
         self.__file_view_manager.flush_file_names(self.__image_manager.get_images_file_name())
+        self.__handle_OCR_Result(file)
 
     def handle_audio_result_slot(self, result: str):
         self.__UI.audioGet_lineEdit.setText("识别内容: " + result)
+
+    def __handle_OCR_Result(self, file_path: str):
+        try:
+            textRecognizer = TextRecognizer()
+            text = textRecognizer.get_all_text(image_path=file_path)
+        except Exception as e:
+            QMessageBox.critical(self, "发生错误", str(e) + "出于此原因，报告很可能无法正常生成！")
+
+            return
+
+        print(text)
+
