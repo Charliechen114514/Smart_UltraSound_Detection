@@ -3,6 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Disable Runtime Middlewares
+runtime_middlewares/
+
+# Disable Result
+result/
+
 # C extensions
 *.so
 

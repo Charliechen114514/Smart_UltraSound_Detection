@@ -1,9 +1,12 @@
 from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtCore import Qt, QFile
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
-from Audio.AudioServerControl import AudioServer
+
 import Ui_MainWindow
+
+# Import the Components
 from ImageBrowser.ImageBrowseUiManager import ImageBrowserUiManager
+from Audio.AudioServerControl import AudioServer
 from ModelController.ModelController import ModelController
 from FileViewManager.FileViewManager import FileViewManager
 from ModelUsing.ModelExecutor import ModelExecutor
@@ -11,14 +14,16 @@ from Utils.Utils import Software_Utils
 from WaitingProcessBar.WaitingWidget import ReminderWindow
 from ReportGenerator.ReportGenerator import ReportGenerator
 from DetectWave.detectWave_BackEnd import ImageWavePraser
-from OCR.TextRecognizer import TextRecognizer
-
+from ReportAnalysis.ReportAnalysis import ReportAnalysisHandler
 
 control_modifier = Qt.KeyboardModifier.ControlModifier
 shift_modifier = Qt.KeyboardModifier.ShiftModifier
 
 
 class MainWindow(QtWidgets.QMainWindow):
+    WINDOW_TITLE = "彩智快警——智慧彩超辅助系统"
+    UI_STYLE_SHEET_PATH = "ui_resources/light/lightstyle.qss"
+
     def __init__(self, parent=None):
         # Do things here when init
         super().__init__(parent)
@@ -29,24 +34,27 @@ class MainWindow(QtWidgets.QMainWindow):
         self.__UI = Ui_MainWindow.Ui_MainWindow()
         self.__UI.setupUi(self)
         self.waveDetector = ImageWavePraser()
-        self.waveDetector.set_write_path("../result/")
-        Software_Utils.createDirentAnyway("../result/")
+        self.waveDetector.set_write_path("./runtime_middlewares/")
+        Software_Utils.createDirentAnyway("./runtime_middlewares/")
         # Info the Image Browser Manager
         self.__image_manager = ImageBrowserUiManager(self.__UI.image_label)
         self.__model_manager = ModelController()
         self.__file_view_manager = FileViewManager(self.__UI.fileListsWidget)
+        self.__analysis_image_report_handler = ReportAnalysisHandler()
         self.__init_connections()
         self.__load_base_ui()
         self.reminder_window = ReminderWindow()
 
     def __load_base_ui(self):
         # Window_Name
-        self.setWindowTitle("Model_Using_Interface")
+        self.setWindowTitle(MainWindow.WINDOW_TITLE)
+        # Analysis report labels
+        self.__UI.label_tell_save_anaysis_path.setText(self.__analysis_image_report_handler.get_current_label())
         # Qss
         self.__load_qss()
 
     def __load_qss(self):
-        qss_pth = "ui_resources/light/lightstyle.qss"
+        qss_pth = MainWindow.UI_STYLE_SHEET_PATH
         with open(qss_pth, 'r') as f:
             res = f.read()
         self.setStyleSheet(res)
@@ -71,15 +79,26 @@ class MainWindow(QtWidgets.QMainWindow):
             self.__UI.fileListsWidget.setVisible(not self.__UI.fileListsWidget.isVisible())
 
     def __init_connections(self):
+        # 初始化菜单栏链接
         self.__UI.action_load_images.triggered.connect(self.load_in_files)
         self.__UI.action_select_model.triggered.connect(self.load_model)
+        self.__UI.action_showInfo.triggered.connect(self.show_current_state)
+        self.__UI.action_recognize_depatch.triggered.connect(self.make_recognize)
+        self.__UI.action_set_report_gen_path.triggered.connect(self.__handle_set_analysis_report_gen_path)
+        self.__UI.action_start_gen_report_analysis.triggered.connect(self.handle_upload_report_image)
+
+        # 初始化左侧文件栏控制链接
         self.__UI.fileListsWidget.itemClicked.connect(self.switch_to_by_file_name)
+
+        # 初始化按钮行为
         self.__UI.btn_load_pictures.clicked.connect(self.load_in_files)
         self.__UI.btn_load_models.clicked.connect(self.load_model)
         self.__UI.btn_start_recognize.clicked.connect(self.make_recognize)
-        self.__UI.action_showInfo.triggered.connect(self.show_current_state)
-        self.__UI.action_recognize_depatch.triggered.connect(self.make_recognize)
         self.__UI.btn_audioServer.clicked.connect(self.handle_audio_button_slot)
+        self.__UI.btn_uploadReport.clicked.connect(self.handle_upload_report_image)
+        self.__UI.btn_setTargetReport_GenPath.clicked.connect(self.__handle_set_analysis_report_gen_path)
+
+        # 初始化组件
         self.audioServer.signal_tell_recognize.connect(self.handle_audio_result_slot)
 
     def __check_and_reject_null_image_browser(self):
@@ -114,7 +133,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def switch_to_by_file_name(self):
         item = self.__UI.fileListsWidget.selectedItems()[0]
-        file_name = item.all_text()
+        file_name = item.text()
         index = self.__image_manager.get_index_by_file_name(file_name)
         if index == -1:
             QMessageBox.critical(self, "没找到！", "尚未找到目标文件，检查是否文件移动！")
@@ -161,7 +180,13 @@ class MainWindow(QtWidgets.QMainWindow):
             QMessageBox.critical(self, "发生错误", descriptions)
             return
         self.reminder_window.set_show_text(self.reportGenerator.generate_report())
-        self.reportGenerator.show_for_file()
+        # self.reportGenerator.show_for_file()
+        # self.reportGenerator.gen_doc_report("../src/1.docx", "./result/检测报告1.docx")
+        # self.reportGenerator.gen_doc_report("../src/3.docx", "./result/检测报告3.docx")
+        # self.reportGenerator.gen_doc_report("../src/17.docx", "./result/检测报告17.docx")
+        # self.reportGenerator.gen_doc_report("../src/20.docx", "./result/检测报告20.docx")
+        # self.reportGenerator.gen_doc_report("../src/36.docx", "./result/检测报告8.docx")
+        # self.reportGenerator.gen_doc_report("../src/40.docx", "./result/检测报告12.docx")
         self.reportGenerator.make_all_clear()
         self.reminder_window.activateWindow()
 
@@ -211,19 +236,32 @@ class MainWindow(QtWidgets.QMainWindow):
         self.waveDetector.clear_res()
         self.__switch_by_index(self.__image_manager.get_current_size() - 1)
         self.__file_view_manager.flush_file_names(self.__image_manager.get_images_file_name())
-        self.__handle_OCR_Result(file)
 
     def handle_audio_result_slot(self, result: str):
         self.__UI.audioGet_lineEdit.setText("识别内容: " + result)
 
-    def __handle_OCR_Result(self, file_path: str):
-        try:
-            textRecognizer = TextRecognizer()
-            text = textRecognizer.get_all_text(image_path=file_path)
-        except Exception as e:
-            QMessageBox.critical(self, "发生错误", str(e) + "出于此原因，报告很可能无法正常生成！")
-
+    def handle_upload_report_image(self):
+        res, reason = self.__analysis_image_report_handler.get_is_analysis_ready()
+        if res is False:
+            QMessageBox.critical(self, "注意", reason)
             return
 
-        print(text)
+        path = Software_Utils.get_current_support_existing_image_path(self, "选择目标导入报告图象")
+        if path is None:
+            return
+        self.__analysis_image_report_handler.set_current_handling_image(path)
+        self.__analysis_image_report_handler.debug_set_src_report_path("../src/001_解析报告.docx")
+        res, reason = self.__analysis_image_report_handler.analysis_report()
+        if res:
+            QMessageBox.information(self, "解析成功", "图象解析成功，请到:\n"
+                                    + self.__analysis_image_report_handler.get_analysis_report_result_path()
+                                    + "\n下查看")
+        else:
+            QMessageBox.critical(self, "解析失败", reason)
 
+    def __handle_set_analysis_report_gen_path(self):
+        path = Software_Utils.get_existing_dir(self, "选择目标文件夹")
+        if path is None:
+            return
+        self.__analysis_image_report_handler.set_target_generate_path(path)
+        self.__UI.label_tell_save_anaysis_path.setText(self.__analysis_image_report_handler.get_current_label())

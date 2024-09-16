@@ -1,7 +1,12 @@
 from PyQt6.QtCore import QFileInfo, QDir, QFile
+from PyQt6.QtWidgets import QWidget, QFileDialog
 import os
+import shutil
+
 
 class Software_Utils:
+    IMAGE_FILTERS = "JPEG Files(*.jpg);;PNG Files(*.png)"
+
     @staticmethod
     def is_file_exist(path: str):
         return os.path.exists(path)
@@ -55,3 +60,28 @@ class Software_Utils:
     @staticmethod
     def from_rela_path_to_abs_path(res: str):
         return os.path.abspath(res)
+
+    @staticmethod
+    def copy_file(src: str, dst: str):
+        return shutil.copy(src, dst)
+
+    @staticmethod
+    def get_existing_file(parent: QWidget, captions: str):
+        path = QFileDialog.getOpenFileName(parent, captions, ".")
+        if len(path[0]) == 0:
+            return None
+        return path[0]
+
+    @staticmethod
+    def get_current_support_existing_image_path(parent: QWidget, captions: str):
+        path = QFileDialog.getOpenFileName(parent, captions, ".", filter=Software_Utils.IMAGE_FILTERS)
+        if len(path[0]) == 0:
+            return None
+        return path[0]
+
+    @staticmethod
+    def get_existing_dir(parent: QWidget, captions: str):
+        path = QFileDialog.getExistingDirectory(parent, captions, ".")
+        if len(path) == 0:
+            return None
+        return path

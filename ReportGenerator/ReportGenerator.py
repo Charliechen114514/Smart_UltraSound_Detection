@@ -1,4 +1,6 @@
 from PyQt6.QtWidgets import QFileDialog
+
+from ReportGenerator.ReportGenerator_IMPL import ReportGenerator_Impl
 from Utils.Utils import Software_Utils
 
 def is_valid(res: int):
@@ -13,6 +15,7 @@ class ReportGenerator:
         self.after_ward_pic_paths = []
         self.after_ward_res = []
         self.report = ""
+        self.impl = ReportGenerator_Impl()
 
     def handle_raw_res(self, res, pic_raw_path):
         raw_res = res
@@ -50,6 +53,11 @@ class ReportGenerator:
             res += "图片路径:> " + each_pic_res + "，其诊断结果为：" + is_valid(each_res) + "\n"
         self.report = res
         return res
+
+    def gen_doc_report(self, src:str, dst: str):
+        self.impl.set_generate_path(dst)
+        self.impl.set_src_path(src)
+        self.impl.generate_doc()
 
     def show_for_file(self):
         path = QFileDialog.getSaveFileName(None, "输入保存文件名称", "")[0]
