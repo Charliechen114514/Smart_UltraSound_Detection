@@ -1,3 +1,5 @@
+import time
+
 from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtCore import Qt, QFile
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
@@ -11,10 +13,11 @@ from ModelController.ModelController import ModelController
 from FileViewManager.FileViewManager import FileViewManager
 from ModelUsing.ModelExecutor import ModelExecutor
 from Utils.Utils import Software_Utils
+from OCR.ImageOCR import OCRTextCore
 from WaitingProcessBar.WaitingWidget import ReminderWindow
 from ReportGenerator.ReportGenerator import ReportGenerator
 from DetectWave.detectWave_BackEnd import ImageWavePraser
-from ReportAnalysis.ReportAnalysis import ReportAnalysisHandler
+from ReportAnalysis.ReportAnalysis_front_end import ReportAnalysisHandler
 
 control_modifier = Qt.KeyboardModifier.ControlModifier
 shift_modifier = Qt.KeyboardModifier.ShiftModifier
@@ -181,12 +184,12 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         self.reminder_window.set_show_text(self.reportGenerator.generate_report())
         # self.reportGenerator.show_for_file()
-        # self.reportGenerator.gen_doc_report("../src/1.docx", "./result/检测报告1.docx")
-        # self.reportGenerator.gen_doc_report("../src/3.docx", "./result/检测报告3.docx")
-        # self.reportGenerator.gen_doc_report("../src/17.docx", "./result/检测报告17.docx")
-        # self.reportGenerator.gen_doc_report("../src/20.docx", "./result/检测报告20.docx")
-        # self.reportGenerator.gen_doc_report("../src/36.docx", "./result/检测报告8.docx")
-        # self.reportGenerator.gen_doc_report("../src/40.docx", "./result/检测报告12.docx")
+        #self.reportGenerator.gen_doc_report("../src/1.docx", "./result/检测报告1.docx")
+        #self.reportGenerator.gen_doc_report("../src/3.docx", "./result/检测报告3.docx")
+        #self.reportGenerator.gen_doc_report("../src/17.docx", "./result/检测报告17.docx")
+        #self.reportGenerator.gen_doc_report("../src/20.docx", "./result/检测报告20.docx")
+        self.reportGenerator.gen_doc_report("../src/36.docx", "./result/检测报告8.docx")
+        #self.reportGenerator.gen_doc_report("../src/40.docx", "./result/检测报告12.docx")
         self.reportGenerator.make_all_clear()
         self.reminder_window.activateWindow()
 
@@ -220,6 +223,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.__UI.btn_audioServer.setText("开始语音识别")
 
     def __do_wave_detect(self, file: str):
+        core = OCRTextCore()
+        print(core.get_text_from_image_for_params(file))
         self.waveDetector.set_file_name(Software_Utils.get_file_name_accord_path(file))
         self.waveDetector.analysis_image(file)
         res_of_file = self.waveDetector.get_init_paths()
@@ -236,6 +241,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.waveDetector.clear_res()
         self.__switch_by_index(self.__image_manager.get_current_size() - 1)
         self.__file_view_manager.flush_file_names(self.__image_manager.get_images_file_name())
+        print()
 
     def handle_audio_result_slot(self, result: str):
         self.__UI.audioGet_lineEdit.setText("识别内容: " + result)
@@ -251,7 +257,11 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         self.__analysis_image_report_handler.set_current_handling_image(path)
         self.__analysis_image_report_handler.debug_set_src_report_path("../src/001_解析报告.docx")
-        res, reason = self.__analysis_image_report_handler.analysis_report()
+        try:
+            res, reason = self.__analysis_image_report_handler.analysis_report()
+        except Exception as e:
+            QMessageBox.critical(self, "发生错误！", "发生错误: " + str(e) + "，\n很有可能式您正在打开待写入文件！请关闭后重试！")
+            return
         if res:
             QMessageBox.information(self, "解析成功", "图象解析成功，请到:\n"
                                     + self.__analysis_image_report_handler.get_analysis_report_result_path()

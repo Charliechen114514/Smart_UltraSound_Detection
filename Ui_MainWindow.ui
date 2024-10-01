@@ -372,7 +372,7 @@
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
-     <string>解析图象报告</string>
+     <string>解析图像报告</string>
     </property>
     <addaction name="action_set_report_gen_path"/>
     <addaction name="action_start_gen_report_analysis"/>

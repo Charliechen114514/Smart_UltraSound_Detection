@@ -217,7 +217,7 @@ class Ui_MainWindow(object):
         self.menu.setTitle(_translate("MainWindow", "导入"))
         self.menu_3.setTitle(_translate("MainWindow", "查看"))
         self.menu_4.setTitle(_translate("MainWindow", "开始识别"))
-        self.menu_2.setTitle(_translate("MainWindow", "解析图象报告"))
+        self.menu_2.setTitle(_translate("MainWindow", "解析图像报告"))
         self.action_select_model.setText(_translate("MainWindow", "加载模型文件"))
         self.action_load_images.setText(_translate("MainWindow", "导入图像"))
         self.action_showInfo.setText(_translate("MainWindow", "查看当前状态"))
