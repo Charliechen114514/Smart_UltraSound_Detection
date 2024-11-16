@@ -8,4 +8,7 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     test_window = MainWindow.MainWindow()
     test_window.show()
-    sys.exit(app.exec())
+    res = app.exec()
+    test_window.do_finalize()
+    sys.exit(res)
+

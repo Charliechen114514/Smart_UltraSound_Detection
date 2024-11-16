@@ -3,16 +3,13 @@ from Utils.Utils import Software_Utils
 
 class ReportGenerator_Impl:
     def __init__(self):
-        self.src_path = ""
-        self.gen_path = ""
+        self.__gen_dir = ""
 
+    def set_generate_dir(self, dir: str):
+        self.__gen_dir = dir
 
-    def set_generate_path(self, gen_path: str):
-        self.gen_path = gen_path
-
-    def set_src_path(self, src_path: str):
-        self.src_path = src_path
+    def get_generate_dir(self) -> str:
+        return self.__gen_dir
 
     def generate_doc(self):
-        # Current IMPL
-        Software_Utils.copy_file(src=self.src_path, dst=self.gen_path)
+        pass

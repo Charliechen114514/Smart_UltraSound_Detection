@@ -21,9 +21,6 @@ class ReportAnalysisHandler:
     def set_current_handling_image(self, path: str):
         self.__image_path = path
 
-    def debug_set_src_report_path(self, path: str):
-        self.__report_path = path
-
     def set_target_generate_path(self, path: str):
         self.__target_gen_path = path
 

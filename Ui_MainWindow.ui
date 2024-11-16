@@ -86,15 +86,15 @@
           </size>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="imports">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>182</width>
-            <height>462</height>
+            <width>111</width>
+            <height>142</height>
            </rect>
           </property>
           <attribute name="label">
@@ -140,8 +140,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>182</width>
-            <height>462</height>
+            <width>146</width>
+            <height>213</height>
            </rect>
           </property>
           <attribute name="label">
@@ -245,6 +245,48 @@
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_inform_report_path">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_set_report_gen_path">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>设置报告生成地址</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="btn_start_recognize">
              <property name="minimumSize">
               <size>
@@ -257,6 +299,19 @@
              </property>
             </widget>
            </item>
+           <item>
+            <spacer name="verticalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="page">
@@ -264,8 +319,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>182</width>
-            <height>462</height>
+            <width>116</width>
+            <height>142</height>
            </rect>
           </property>
           <attribute name="label">
@@ -311,8 +366,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>182</width>
-            <height>462</height>
+            <width>98</width>
+            <height>111</height>
            </rect>
           </property>
           <attribute name="label">

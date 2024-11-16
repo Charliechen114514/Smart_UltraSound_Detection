@@ -1,9 +1,9 @@
-import time
-
+# Qt Libraries
 from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtCore import Qt, QFile
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
 
+# Ui Window
 import Ui_MainWindow
 
 # Import the Components
@@ -13,11 +13,22 @@ from ModelController.ModelController import ModelController
 from FileViewManager.FileViewManager import FileViewManager
 from ModelUsing.ModelExecutor import ModelExecutor
 from Utils.Utils import Software_Utils
+# OCR
 from OCR.ImageOCR import OCRTextCore
+# Waiting ProcessBar
 from WaitingProcessBar.WaitingWidget import ReminderWindow
+# Report Generator
 from ReportGenerator.ReportGenerator import ReportGenerator
+# Wave detections
 from DetectWave.detectWave_BackEnd import ImageWavePraser
+# ReportAnalysis
 from ReportAnalysis.ReportAnalysis_front_end import ReportAnalysisHandler
+
+# Init
+# Keys
+from config.config_common import *
+# Initer
+from config.config_read_write import MainWindow_IniterDeIniter
 
 control_modifier = Qt.KeyboardModifier.ControlModifier
 shift_modifier = Qt.KeyboardModifier.ShiftModifier
@@ -47,12 +58,24 @@ class MainWindow(QtWidgets.QMainWindow):
         self.__init_connections()
         self.__load_base_ui()
         self.reminder_window = ReminderWindow()
+        self.__monitor_init_deinit = None
+        self.__further_init()
+
+    def __further_init(self):
+        try:
+            self.__monitor_init_deinit = MainWindow_IniterDeIniter()
+        except Exception as e:
+            QMessageBox.critical(self, "配置文件读取发生错误！", "配置文件错误: {}".format(str(e)))
+            return
+        dict_exp = self.__monitor_init_deinit.expose_dict()
+        # Load Paths
+        self.__load_model_impl(dict_exp[MODEL_PATH])
+        self.__set_report_gen_path_impl(dict_exp[REPORT_PATH])
+        self.__set_analysis_report_gen_path_impl(dict_exp[ANALYSIS_PATH])
 
     def __load_base_ui(self):
         # Window_Name
         self.setWindowTitle(MainWindow.WINDOW_TITLE)
-        # Analysis report labels
-        self.__UI.label_tell_save_anaysis_path.setText(self.__analysis_image_report_handler.get_current_label())
         # Qss
         self.__load_qss()
 
@@ -100,6 +123,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.__UI.btn_audioServer.clicked.connect(self.handle_audio_button_slot)
         self.__UI.btn_uploadReport.clicked.connect(self.handle_upload_report_image)
         self.__UI.btn_setTargetReport_GenPath.clicked.connect(self.__handle_set_analysis_report_gen_path)
+        self.__UI.btn_set_report_gen_path.clicked.connect(self.__handle_set_report_gen_path)
 
         # 初始化组件
         self.audioServer.signal_tell_recognize.connect(self.handle_audio_result_slot)
@@ -147,7 +171,12 @@ class MainWindow(QtWidgets.QMainWindow):
         result = QFileDialog.getOpenFileName(self, "选择想要加载的文件", "", self.__model_manager.get_supported_model())
         if len(result[0]) == 0:
             return
-        self.__model_manager.en_model_name(result[0])
+        self.__load_model_impl(result[0])
+
+    def __load_model_impl(self, path: str):
+        if path == "":
+            return
+        self.__model_manager.en_model_name(model_name=path)
 
     def to_next(self):
         if not self.__switch_by_index(self.__image_manager.get_current_focus_index() + 1):
@@ -182,16 +211,13 @@ class MainWindow(QtWidgets.QMainWindow):
         if not is_valid:
             QMessageBox.critical(self, "发生错误", descriptions)
             return
-        self.reminder_window.set_show_text(self.reportGenerator.generate_report())
-        # self.reportGenerator.show_for_file()
-        #self.reportGenerator.gen_doc_report("../src/1.docx", "./result/检测报告1.docx")
-        #self.reportGenerator.gen_doc_report("../src/3.docx", "./result/检测报告3.docx")
-        #self.reportGenerator.gen_doc_report("../src/17.docx", "./result/检测报告17.docx")
-        #self.reportGenerator.gen_doc_report("../src/20.docx", "./result/检测报告20.docx")
-        self.reportGenerator.gen_doc_report("../src/36.docx", "./result/检测报告8.docx")
-        #self.reportGenerator.gen_doc_report("../src/40.docx", "./result/检测报告12.docx")
+        self.reminder_window.set_show_text(self.reportGenerator.generate_indications())
         self.reportGenerator.make_all_clear()
         self.reminder_window.activateWindow()
+
+    """
+        显示当前的状态如何，使用的是对话框显示
+    """
 
     def show_current_state(self):
         pic_size = self.__image_manager.get_current_size()
@@ -208,6 +234,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         QMessageBox.information(self, "当前状态", pics_info + model_info)
         return
+
+    """
+        MainWindow KeyEvent的处理
+    """
 
     def keyPressEvent(self, key_env: QtGui.QKeyEvent):
         self.__handle_image_browser_event(key_env)
@@ -256,11 +286,11 @@ class MainWindow(QtWidgets.QMainWindow):
         if path is None:
             return
         self.__analysis_image_report_handler.set_current_handling_image(path)
-        self.__analysis_image_report_handler.debug_set_src_report_path("../src/001_解析报告.docx")
         try:
             res, reason = self.__analysis_image_report_handler.analysis_report()
         except Exception as e:
-            QMessageBox.critical(self, "发生错误！", "发生错误: " + str(e) + "，\n很有可能式您正在打开待写入文件！请关闭后重试！")
+            QMessageBox.critical(self, "发生错误！",
+                                 "发生错误: " + str(e) + "，\n很有可能式您正在打开待写入文件！请关闭后重试！")
             return
         if res:
             QMessageBox.information(self, "解析成功", "图象解析成功，请到:\n"
@@ -269,9 +299,34 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             QMessageBox.critical(self, "解析失败", reason)
 
+    def __handle_set_report_gen_path(self):
+        path = Software_Utils.get_existing_dir(self, "选择目标文件夹")
+        if path is None:
+            return
+        self.__set_report_gen_path_impl(path)
+
+    def __set_report_gen_path_impl(self, path: str):
+        self.reportGenerator.set_report_dir(path)
+        self.__UI.label_inform_report_path.setText(self.reportGenerator.fetch_tell_report_dir_labelText())
+
     def __handle_set_analysis_report_gen_path(self):
         path = Software_Utils.get_existing_dir(self, "选择目标文件夹")
         if path is None:
             return
+        self.__set_analysis_report_gen_path_impl(path)
+
+    def __set_analysis_report_gen_path_impl(self, path: str):
         self.__analysis_image_report_handler.set_target_generate_path(path)
         self.__UI.label_tell_save_anaysis_path.setText(self.__analysis_image_report_handler.get_current_label())
+
+    def do_finalize(self):
+        if self.__monitor_init_deinit is None:
+            pass
+        dict_of_cache = self.__monitor_init_deinit.expose_dict()
+        dict_of_cache[MODEL_PATH] = self.__model_manager.get_cur_focus_model_name()
+        dict_of_cache[ANALYSIS_PATH] = self.__analysis_image_report_handler.get_analysis_report_result_path()
+        dict_of_cache[REPORT_PATH] = self.reportGenerator.fetch_report_dir()
+        try:
+            self.__monitor_init_deinit.write_back_file()
+        except Exception as e:
+            QMessageBox.critical(self, "写配置文件发生错误!", "发生写配置文件错误!" + str(e))
