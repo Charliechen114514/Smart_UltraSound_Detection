@@ -1,6 +1,8 @@
 from PyQt6.QtWidgets import QWidget
 import reminderprocesswindow
 from ModelUsing.ModelExecutor import ModelExecutor
+
+
 class ReminderWindow(QWidget):
     def __init__(self, parent=None):
         # Do things here when init
@@ -12,19 +14,15 @@ class ReminderWindow(QWidget):
         self.total = 0
         # 设置进度条的范围
         self.__UI.exportProgressBar.setMinimum(0)
-        self.__UI.exportProgressBar.setStyleSheet(
-            "QProgressBar { border: 2px solid grey; "
-            "border-radius: 5px; background-color: #FFFFFF; "
-            "text-align: center;}"
-            "QProgressBar::chunk {background:QLinearGradient(x1:0,y1:0,x2:2,y2:0,stop:0 #666699,stop:1  #DB7093); }")
+
+    def closeEvent(self, a0):
+        print("Close the dialog")
+        self.clear_show()
+
 
     def set_total(self, size: int):
         self.total = size
         self.__UI.exportProgressBar.setMaximum(size)
-
-    def init_connect(self, model_executor: ModelExecutor):
-        model_executor.finish_x.connect(self.handle_x)
-        model_executor.finish_all.connect(self.handle_finish)
 
     def handle_finish(self):
         self.__UI.exportProgressBar.setValue(self.total)
@@ -33,6 +31,15 @@ class ReminderWindow(QWidget):
     def handle_x(self, index: int):
         self.__UI.exportProcessTextEdit.setText("完成识别第" + str(index) + "张图片")
         self.__UI.exportProgressBar.setValue(index)
+        print("{}, {}".format(index, self.total))
 
     def set_show_text(self, strings: str):
         self.__UI.sthFunShow.setText(strings)
+
+    def append_text(self, text: str):
+        self.__UI.sthFunShow.append(text)
+        self.__UI.sthFunShow.verticalScrollBar().setSliderPosition(
+            self.__UI.sthFunShow.verticalScrollBar().maximum())
+
+    def clear_show(self):
+        self.__UI.sthFunShow.clear()

@@ -1,5 +1,3 @@
-from typing import Tuple
-
 TOO_HIGH = "(偏高↑)"
 TOO_LOW = "(偏低↓)"
 NORMAL = "(正常)"

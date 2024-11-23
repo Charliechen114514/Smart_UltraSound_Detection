@@ -1,4 +1,4 @@
-from ReportDocxGeneratorDriver import ReportDocxGeneratorCore
+from .ReportDocxGeneratorDriver import ReportDocxGeneratorCore
 import os.path as pth
 
 
@@ -12,15 +12,15 @@ class ReportGeneratorIMPL:
         self.__image_path = ""
         self.__suggestions = ""
 
-    def set_saving_path(self, dir: str, pic_file_name: str):
-        self.__saving_path = pth.join(dir, ReportGeneratorIMPL.MIDDLE_NAME + pic_file_name + ".docx")
+    def set_saving_path(self, _dir: str, pic_file_name: str):
+        self.__saving_path = pth.join(_dir, ReportGeneratorIMPL.MIDDLE_NAME + pic_file_name + ".docx")
         return self
 
     def set_image_path(self, path: str):
         self.__image_path = path
         return self
 
-    def set_infoLists(self, infos: list[str]):
+    def set_infoLists(self, infos: list[float]):
         self.__infoLists = infos
         return self
 

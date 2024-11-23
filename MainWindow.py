@@ -1,7 +1,7 @@
 # Qt Libraries
 from PyQt6 import QtWidgets, QtGui
-from PyQt6.QtCore import Qt, QFile
-from PyQt6.QtWidgets import QFileDialog, QMessageBox
+from PyQt6.QtCore import Qt, QFile, QMetaObject
+from PyQt6.QtWidgets import QFileDialog, QMessageBox, QApplication
 
 # Ui Window
 import Ui_MainWindow
@@ -21,6 +21,7 @@ from WaitingProcessBar.WaitingWidget import ReminderWindow
 from ReportGenerator.ReportGenerator import ReportGenerator
 # Wave detections
 from DetectWave.detectWave_BackEnd import ImageWavePraser
+from DetectWave.WaveSplitMap import WaveSplitMap
 # ReportAnalysis
 from ReportAnalysis.ReportAnalysis_front_end import ReportAnalysisHandler
 
@@ -48,6 +49,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.__UI = Ui_MainWindow.Ui_MainWindow()
         self.__UI.setupUi(self)
         self.waveDetector = ImageWavePraser()
+        self.__mapWaveFile = WaveSplitMap()
         self.waveDetector.set_write_path("./runtime_middlewares/")
         Software_Utils.createDirentAnyway("./runtime_middlewares/")
         # Info the Image Browser Manager
@@ -57,7 +59,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.__analysis_image_report_handler = ReportAnalysisHandler()
         self.__init_connections()
         self.__load_base_ui()
-        self.reminder_window = ReminderWindow()
+        self.__reminder_window = ReminderWindow()
+        self.__wave_split_window = ReminderWindow()
         self.__monitor_init_deinit = None
         self.__further_init()
 
@@ -155,8 +158,19 @@ class MainWindow(QtWidgets.QMainWindow):
         files = results[0]
         if len(files) == 0:
             return
+        self.__wave_split_window.set_total(len(files))
+        self.__wave_split_window.set_show_text("正在分割波形...")
+        self.__wave_split_window.show()
+        index = 1
         for file in files:
+            self.__wave_split_window.handle_x(index)
+            self.__wave_split_window.append_text("正在分割第{}个图像".format(index))
+            QApplication.processEvents()
             self.__do_wave_detect(file)
+            index += 1
+        self.__wave_split_window.handle_finish()
+        self.__wave_split_window.append_text("完成导入所有图像")
+
 
     def switch_to_by_file_name(self):
         item = self.__UI.fileListsWidget.selectedItems()[0]
@@ -197,23 +211,40 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.__image_manager.get_current_size() == 0:
             QMessageBox.critical(self, "导入图片", "请导入图片先")
             return
-        self.reminder_window.set_total(self.__image_manager.get_current_size())
+        self.__reminder_window.set_total(self.__mapWaveFile.gain_size())
         self.model_executor = ModelExecutor(self.__model_manager.get_cur_focus_model_name(), self)
-        self.reminder_window.init_connect(self.model_executor)
+        print(self.__image_manager.get_images_raw_file_name())
         self.model_executor.load_images_path_and_make_init(self.__image_manager.get_images_raw_file_name())
         faults, res = self.model_executor.make_predictions()
         if len(faults) != 0:
             QMessageBox(self, "发生图片加载错误", self.model_executor.make_inform_faults(faults))
             return
-        self.reminder_window.show()
+
         self.reportGenerator.handle_raw_res(res, self.__image_manager.get_images_raw_file_name())
         is_valid, descriptions = self.reportGenerator.check_valid()
         if not is_valid:
             QMessageBox.critical(self, "发生错误", descriptions)
             return
-        self.reminder_window.set_show_text(self.reportGenerator.generate_indications())
+        self.__reminder_window.set_show_text(self.reportGenerator.generate_indications())
+        self.__reminder_window.show()
+        self.__reminder_window.append_text("准备生成报告: \n")
+        all_res = self.reportGenerator.gain_result()
+        index = 1
+        for each_state, each_pic in all_res:
+            # 不太美观。。。但比卡死好！
+            QApplication.processEvents()
+            (self.reportGenerator.
+                set_image_holding(self.__mapWaveFile.gain_path_by_file_name_match(each_pic))
+                .set_report_status(each_state))
+            self.__reminder_window.handle_x(index)
+            self.__reminder_window.append_text("正在生成第{}份报告".format(index))
+            index += 1
+            QApplication.processEvents()
+            self.reportGenerator.generate_report()
+        self.__reminder_window.handle_finish()
+        self.__reminder_window.append_text("完成生成报告")
         self.reportGenerator.make_all_clear()
-        self.reminder_window.activateWindow()
+        self.__reminder_window.activateWindow()
 
     """
         显示当前的状态如何，使用的是对话框显示
@@ -255,6 +286,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __do_wave_detect(self, file: str):
         core = OCRTextCore()
         print(core.get_text_from_image_for_params(file))
+        self.__mapWaveFile.entryFile(file)
         self.waveDetector.set_file_name(Software_Utils.get_file_name_accord_path(file))
         self.waveDetector.analysis_image(file)
         res_of_file = self.waveDetector.get_init_paths()
