@@ -1,0 +1,50 @@
+[tool.poetry]
+name = "smartultrasound-detection"
+version = "0.1.0"
+description = ""
+authors = ["charliechen114514 <725610365@qq.com>"]
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+# ReStrict the usage as python 3.12, which is required
+python = ">=3.12 <3.13"
+
+[tool.poetry.group.pytorch.dependencies]
+torch = {version = "^2.5.1+cu124", source = "pytorch"}
+torchvision = {version = "^0.20.1+cu124", source = "pytorch"}
+torchaudio = {version = "^2.5.1+cu124", source = "pytorch"}
+
+
+[tool.poetry.group.pyside.dependencies]
+# Only Support 6.7.3, as the shiboken dependency is a bit too new
+pyside6 = {version = "<6.8.0", source = "tsinghua"}
+
+
+[tool.poetry.group.audio_server.dependencies]
+vosk = {version = "^0.3.45", source = "tsinghua"}
+pyaudio = {version = "^0.2.14", source = "tsinghua"}
+
+
+
+[tool.poetry.group.ocr.dependencies]
+pytesseract = {version = "^0.3.13", source = "tsinghua"}
+
+
+[tool.poetry.group.document_generation.dependencies]
+python-docx = {version = "^1.1.2", source = "tsinghua"}
+
+[[tool.poetry.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu124"
+priority = "explicit"
+
+
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
