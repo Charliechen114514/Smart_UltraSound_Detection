@@ -95,6 +95,8 @@ class ReportGenerator:
                               self.__image_holding_path)))
         if not self.__report_state:
             gen_report_impl.set_suggestions(SuggestionsFetcher.get_advice(infos, True))
+        else:
+            gen_report_impl.set_suggestions("无明显异常情况。")
         gen_report_impl.generate_document()
         self.__param_fetcher.clear_previous()
 

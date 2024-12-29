@@ -39,8 +39,7 @@ class ReportGeneratorIMPL:
         document.draw_table(self.__infoLists)
         para = document.gain_blank_para()
         suggestions = ""
-        if not self.is_normal:
-            suggestions = self.__suggestions
+        suggestions = self.__suggestions
         document.append_paragraph(para, "智能诊断意见：\n    {}\n".format(suggestions))
         document.append_paragraph(para, "超声所见：\n\n\n")
         document.append_paragraph(para, "超声提示：")

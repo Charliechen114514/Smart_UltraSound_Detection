@@ -116,7 +116,7 @@ class SuggestionsFetcher:
         print("TAmax: ", self.__res[6])
         print("HR: ", self.__res[7])
         """
-        suggest = ""
+        suggest = "疑似异常情况。"
         suggest += SuggestionsFetcher.__gain_block_SD(infos[2], _period)
         suggest += SuggestionsFetcher.__gain_block_PI(infos[3], _period)
         suggest += SuggestionsFetcher.__gain_block_RI(infos[4], _period)
