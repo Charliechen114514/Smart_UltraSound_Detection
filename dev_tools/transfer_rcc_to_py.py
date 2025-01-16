@@ -5,14 +5,14 @@ from pathlib import Path
 python_executable_dirent    = sys.prefix
 
 # fetch the ui-transfer executable
-def fetch_uic_executable() -> str:
-    pyuic_path = os.path.join(python_executable_dirent, "Scripts", "pyside6-uic.exe")
-    if not os.path.exists(pyuic_path):
-        print("Can not find the uic at path:{}".format(pyuic_path))
+def fetch_rcc_executable() -> str:
+    pyrcc_path = os.path.join(python_executable_dirent, "Scripts", "pyside6-rcc.exe")
+    if not os.path.exists(pyrcc_path):
+        print("Can not find the rcc at path:{}".format(pyrcc_path))
         exit(-1)
-    return pyuic_path
+    return pyrcc_path
 
-def fetch_args_of_ui_file() -> str:
+def fetch_args_of_qrc_file() -> str:
     ui_path = sys.argv[1]
     if not os.path.exists(ui_path):
         print("Can not find the ui file :(")
@@ -39,18 +39,14 @@ def check_params():
         exit(-1)
 
 
-
-"""
-    this file is using as the following
-"""
 check_params()
 possible_summon_place = fetch_args_of_possible_path_new()
+rcc = fetch_rcc_executable()
+qrc_file = fetch_args_of_qrc_file()
 if possible_summon_place == "":
-    uic = fetch_uic_executable()
-    ui_file = fetch_args_of_ui_file()
-    subprocess.run([uic, ui_file, "-o", fetch_summon_ui_name(ui_file)])
-
-
+    subprocess.run([rcc, qrc_file, "-o", fetch_summon_ui_name(qrc_file)])
+else:
+    subprocess.run([rcc, qrc_file, "-o", possible_summon_place])
 
 
 

@@ -10,6 +10,7 @@ readme = "README.md"
 # ReStrict the usage as python 3.12, which is required
 python = ">=3.12 <3.13"
 
+
 [tool.poetry.group.pytorch.dependencies]
 torch = {version = "^2.5.1+cu124", source = "pytorch"}
 torchvision = {version = "^0.20.1+cu124", source = "pytorch"}
@@ -25,7 +26,8 @@ pyside6 = {version = "<6.8.0", source = "tsinghua"}
 vosk = {version = "^0.3.45", source = "tsinghua"}
 pyaudio = {version = "^0.2.14", source = "tsinghua"}
 
-
+[tool.poetry.group.logging.dependencies]
+loguru = {version = "^0.7.3", source = "tsinghua"}
 
 [tool.poetry.group.ocr.dependencies]
 pytesseract = {version = "^0.3.13", source = "tsinghua"}
@@ -33,6 +35,7 @@ pytesseract = {version = "^0.3.13", source = "tsinghua"}
 
 [tool.poetry.group.document_generation.dependencies]
 python-docx = {version = "^1.1.2", source = "tsinghua"}
+
 
 [[tool.poetry.source]]
 name = "pytorch"

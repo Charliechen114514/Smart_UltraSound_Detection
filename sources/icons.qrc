@@ -1,0 +1,18 @@
+<!DOCTYPE RCC>
+<RCC>
+    <qresource prefix="/icons/toolbar">
+        <file>toolbars/import_images.png</file>
+        <file>toolbars/import_models.png</file>
+        <file>toolbars/check_infos.png</file>
+        <file>toolbars/summon_document.png</file>
+        <file>toolbars/analysis_report.png</file>
+        <file>toolbars/settings.png</file>
+    </qresource>
+    <qresource prefix="/icons/pagetables">
+        <file>pagetables/preload.png</file>
+        <file>pagetables/summon_document.png</file>
+        <file>pagetables/analysis_report.png</file>
+        <file>pagetables/settings.png</file>
+        <file>pagetables/recognize.png</file>
+    </qresource>
+</RCC>

@@ -1,1 +1,1 @@
-__all__ = ["MainWindow"]
+from .MainWindow import MainWindow
