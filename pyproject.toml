@@ -10,7 +10,6 @@ readme = "README.md"
 # ReStrict the usage as python 3.12, which is required
 python = ">=3.12 <3.13"
 
-
 [tool.poetry.group.pytorch.dependencies]
 torch = {version = "^2.5.1+cu124", source = "pytorch"}
 torchvision = {version = "^0.20.1+cu124", source = "pytorch"}
@@ -31,13 +30,17 @@ loguru = {version = "^0.7.3", source = "tsinghua"}
 
 [tool.poetry.group.ocr.dependencies]
 pytesseract = {version = "^0.3.13", source = "tsinghua"}
-
+opencv-python = {version = "^4.11.0.86", source = "tsinghua"}
 
 [tool.poetry.group.document_generation.dependencies]
 python-docx = {version = "^1.1.2", source = "tsinghua"}
 
 [tool.poetry.group.test.dependencies]
 pytest = {version = "^8.3.4", source = "tsinghua"}
+
+# Train can be extrad... install when required
+[tool.poetry.extras]
+train = ['scikit-learn']
 
 [[tool.poetry.source]]
 name = "pytorch"

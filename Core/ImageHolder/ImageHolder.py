@@ -17,6 +17,7 @@ class ImageHolder:
 
     def __push_images_fromList(self, imageList: list[str]):
         self.__imageList = list(set(self.__imageList) | set(imageList))
+        logger.trace(f"images are {self.__imageList}")
         self.__current_index = len(self.__imageList) - 1
         
     def image_list_size(self) -> int:
@@ -27,6 +28,7 @@ class ImageHolder:
     
     def remove_by_name(self, target: list[str]):
         _paths = PathUtils.get_path_from_base_name(names=target, paths=self.__imageList)
+        logger.trace(f"will remove the {_paths} in image holder!")
         self.__imageList = list(set(self.__imageList) - set(_paths))
         
     def gain_paths_from_names(self, target: list[str]) -> list[str]:
@@ -36,19 +38,20 @@ class ImageHolder:
         if req_sorted:
             return sorted(PathUtils.gain_names_from_paths(self.__imageList))
         return PathUtils.gain_names_from_paths(self.__imageList)
+    
     def switch_next_image(self) -> str:
         if len(self.__imageList) == 0:
-            raise "Error for the Empty set imageList operations"
+            return ""
         self.__current_index += 1
-        if self.__current_index == len(self.__imageList):
+        if self.__current_index >= len(self.__imageList):
             self.__current_index = 0
         return self.current_indexed_path()
     
     def switch_prev_image(self) -> str:
         if len(self.__imageList) == 0:
-            raise "Error for the Empty set imageList operations"
+            return ""
         self.__current_index -= 1
-        if self.__current_index == -1:
+        if self.__current_index <= -1:
             self.__current_index = len(self.__imageList) - 1
         return self.current_indexed_path()
 

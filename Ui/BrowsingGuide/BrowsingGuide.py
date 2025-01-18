@@ -21,7 +21,7 @@ class BrowsingGuide(QWidget):
         self.__Ui.lineEdit.setText("")
         self.__Ui.lineEdit.setEnabled(False)
 
-    def set_totol_size(self, size: int):
+    def set_total_size(self, size: int):
         self.__Ui.lineEdit.setEnabled(True)
         self.__size = size
         self.__Ui.label.setText(f"/{self.__size}")

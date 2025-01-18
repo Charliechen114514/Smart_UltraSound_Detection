@@ -1,8 +1,12 @@
 from Core.Common.image_utils import ImageUtils
 import os
 from pathlib import Path
+from loguru import logger
 
 class PathUtils:
+    MIDDLEWARES_ROOT = "runtimes_middlewares"
+    RC_PATH = os.path.join(MIDDLEWARES_ROOT, "rc_py")
+    SPLIT_PATH = os.path.join(MIDDLEWARES_ROOT, "splits")
     """
         This help gains the images that is support in
         current application
@@ -43,3 +47,15 @@ class PathUtils:
             reqs.append(os.path.exists(each_one))
         return reqs
 
+    @staticmethod
+    def create_dirent_if_not_exsited(dir_path: str):
+    # 检查路径是否存在，如果不存在则创建
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
+            logger.info(f"Directory '{dir_path}' created as is requried")
+        else:
+            logger.info(f"Directory '{dir_path}' already exists. jump the creations...")
+
+    @staticmethod
+    def check_paths_if_exsit(file_or_dir_path: str) -> bool:
+        return os.path.exists(file_or_dir_path)

@@ -22,3 +22,7 @@ class UiUtils:
     @staticmethod
     def fetch_selected_file(parent: QWidget, cap: str, dirent = ".", filters = makeup_model_filters()) -> str:
         return QFileDialog.getOpenFileName(parent, cap, dirent, filters)[0]
+    
+    @staticmethod
+    def fetch_open_dirent(parent: QWidget, cap: str, dirent = ".") -> str:
+        return QFileDialog.getExistingDirectory(parent, cap, dirent)

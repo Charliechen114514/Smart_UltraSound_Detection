@@ -3,9 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# run time middlewares
-runtime_middlewares/
-
 # Disable Runtime Middlewares
 runtime_middlewares/
 
@@ -126,6 +123,15 @@ __pypackages__/
 # Celery stuff
 celerybeat-schedule
 celerybeat.pid
+
+# Private configurations
+Core/config/config.ini
+
+# test sources
+tests/other_test_sources
+tests/result
+# train sources
+model_train/model_sources
 
 # SageMath parsed files
 *.sage.py

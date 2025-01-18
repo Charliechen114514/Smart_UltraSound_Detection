@@ -14,6 +14,7 @@ switch ($command) {
         Write-Host "transforming the ui files..."
         poetry run python .\dev_tools\transfer_to_uipy.py .\Ui\MainWindow\MainWindow.ui
         poetry run python .\dev_tools\transfer_to_uipy.py .\Ui\BrowsingGuide\BrowsingGuide.ui
+        poetry run python .\dev_tools\transfer_to_uipy.py .\Ui\InfoWindow\InfoWindow.ui
         Write-Host "transforming the ui files done!"
     }
 
@@ -48,6 +49,12 @@ switch ($command) {
         Write-Host "Cleaning the sources..."
         poetry run python -m clean_up.clean
         Write-Host "Clean up down"
+    }
+
+    "--train"{
+        Write-Host "Start training the model"
+        poetry run python -m model_train.model_train
+        Write-Host "Model train down, check the train folder for the usage"
     }
 
     "--test"{

@@ -19,4 +19,7 @@
         <file>pagetables/import_with_folder.png</file>
         <file>pagetables/recognize.png</file>
     </qresource>
+    <qresource prefix="/icons/window_icon">
+        <file>window_icon/check_infos.png</file>
+    </qresource>
 </RCC>
