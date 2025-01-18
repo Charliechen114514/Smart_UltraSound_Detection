@@ -13,6 +13,7 @@ switch ($command) {
     "--summon_uipy" {
         Write-Host "transforming the ui files..."
         poetry run python .\dev_tools\transfer_to_uipy.py .\Ui\MainWindow\MainWindow.ui
+        poetry run python .\dev_tools\transfer_to_uipy.py .\Ui\BrowsingGuide\BrowsingGuide.ui
         Write-Host "transforming the ui files done!"
     }
 
@@ -49,6 +50,12 @@ switch ($command) {
         Write-Host "Clean up down"
     }
 
+    "--test"{
+        Write-Host "Test the main functionalities..."
+        poetry run pytest
+        Write-Host "Test Donw"
+    }
+
     "--help"{
         Write-Host 
 
@@ -62,6 +69,7 @@ switch ($command) {
         --all                  Set up environments and run the main application.
         --help                 Show this help message and exit.
         --clean                Clean up the runtime middlewares and the pycaches
+        --test                 Test the functionalities if required
         "  
         
     }

@@ -66,6 +66,26 @@ class Ui_MainWindow(object):
         self.action_set_summon_path = QAction(MainWindow)
         self.action_set_summon_path.setObjectName(u"action_set_summon_path")
         self.action_set_summon_path.setIcon(icon5)
+        self.action_import_folder = QAction(MainWindow)
+        self.action_import_folder.setObjectName(u"action_import_folder")
+        icon6 = QIcon()
+        icon6.addFile(u":/icons/toolbar/toolbars/import_with_folder.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.action_import_folder.setIcon(icon6)
+        self.action_import_folder.setMenuRole(QAction.MenuRole.NoRole)
+        self.action_next_image = QAction(MainWindow)
+        self.action_next_image.setObjectName(u"action_next_image")
+        self.action_next_image.setEnabled(False)
+        icon7 = QIcon()
+        icon7.addFile(u":/icons/toolbar/toolbars/next.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.action_next_image.setIcon(icon7)
+        self.action_next_image.setMenuRole(QAction.MenuRole.NoRole)
+        self.action_prev_image = QAction(MainWindow)
+        self.action_prev_image.setObjectName(u"action_prev_image")
+        self.action_prev_image.setEnabled(False)
+        icon8 = QIcon()
+        icon8.addFile(u":/icons/toolbar/toolbars/prev.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.action_prev_image.setIcon(icon8)
+        self.action_prev_image.setMenuRole(QAction.MenuRole.NoRole)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout_3 = QHBoxLayout(self.centralwidget)
@@ -119,9 +139,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.btn_load_image)
 
-        icon6 = QIcon()
-        icon6.addFile(u":/icons/pagetables/pagetables/preload.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.operate_tool_box.addItem(self.page, icon6, u"\u524d\u7f6e\u52a0\u8f7d")
+        icon9 = QIcon()
+        icon9.addFile(u":/icons/pagetables/pagetables/preload.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.operate_tool_box.addItem(self.page, icon9, u"\u524d\u7f6e\u52a0\u8f7d")
         self.page_2 = QWidget()
         self.page_2.setObjectName(u"page_2")
         self.page_2.setGeometry(QRect(0, 0, 176, 182))
@@ -143,9 +163,9 @@ class Ui_MainWindow(object):
         self.btn_set_analysis_path = QPushButton(self.widget)
         self.btn_set_analysis_path.setObjectName(u"btn_set_analysis_path")
         self.btn_set_analysis_path.setMinimumSize(QSize(0, 50))
-        icon7 = QIcon()
-        icon7.addFile(u":/icons/pagetables/pagetables/settings.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_set_analysis_path.setIcon(icon7)
+        icon10 = QIcon()
+        icon10.addFile(u":/icons/pagetables/pagetables/settings.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_set_analysis_path.setIcon(icon10)
 
         self.verticalLayout_7.addWidget(self.btn_set_analysis_path)
 
@@ -157,9 +177,9 @@ class Ui_MainWindow(object):
         self.btn_analysis_report.setObjectName(u"btn_analysis_report")
         self.btn_analysis_report.setEnabled(False)
         self.btn_analysis_report.setMinimumSize(QSize(0, 50))
-        icon8 = QIcon()
-        icon8.addFile(u":/icons/pagetables/pagetables/analysis_report.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_analysis_report.setIcon(icon8)
+        icon11 = QIcon()
+        icon11.addFile(u":/icons/pagetables/pagetables/analysis_report.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_analysis_report.setIcon(icon11)
 
         self.verticalLayout_7.addWidget(self.btn_analysis_report)
 
@@ -170,7 +190,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_6.addWidget(self.widget)
 
-        self.operate_tool_box.addItem(self.page_2, icon8, u"\u89e3\u6790\u7aef\u5c0f\u7a0b\u5e8f")
+        self.operate_tool_box.addItem(self.page_2, icon11, u"\u89e3\u6790\u7aef\u5c0f\u7a0b\u5e8f")
         self.page_3 = QWidget()
         self.page_3.setObjectName(u"page_3")
         self.page_3.setGeometry(QRect(0, 0, 144, 182))
@@ -192,7 +212,7 @@ class Ui_MainWindow(object):
         self.btn_set_summon_path = QPushButton(self.widget_summon_report)
         self.btn_set_summon_path.setObjectName(u"btn_set_summon_path")
         self.btn_set_summon_path.setMinimumSize(QSize(0, 50))
-        self.btn_set_summon_path.setIcon(icon7)
+        self.btn_set_summon_path.setIcon(icon10)
 
         self.verticalLayout_5.addWidget(self.btn_set_summon_path)
 
@@ -215,9 +235,9 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addWidget(self.widget_summon_report)
 
-        icon9 = QIcon()
-        icon9.addFile(u":/icons/pagetables/pagetables/summon_document.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.operate_tool_box.addItem(self.page_3, icon9, u"\u751f\u6210\u7aef\u5c0f\u7a0b\u5e8f")
+        icon12 = QIcon()
+        icon12.addFile(u":/icons/pagetables/pagetables/summon_document.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.operate_tool_box.addItem(self.page_3, icon12, u"\u751f\u6210\u7aef\u5c0f\u7a0b\u5e8f")
         self.page_4 = QWidget()
         self.page_4.setObjectName(u"page_4")
         self.page_4.setGeometry(QRect(0, 0, 173, 387))
@@ -235,9 +255,9 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addWidget(self.widget_param_browsing)
 
-        icon10 = QIcon()
-        icon10.addFile(u":/icons/pagetables/pagetables/recognize.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.operate_tool_box.addItem(self.page_4, icon10, u"\u56fe\u50cf\u8bc6\u522b")
+        icon13 = QIcon()
+        icon13.addFile(u":/icons/pagetables/pagetables/recognize.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.operate_tool_box.addItem(self.page_4, icon13, u"\u56fe\u50cf\u8bc6\u522b")
 
         self.horizontalLayout_2.addWidget(self.operate_tool_box)
 
@@ -259,6 +279,8 @@ class Ui_MainWindow(object):
         self.menu.setObjectName(u"menu")
         self.menu_2 = QMenu(self.menubar)
         self.menu_2.setObjectName(u"menu_2")
+        self.menu_3 = QMenu(self.menubar)
+        self.menu_3.setObjectName(u"menu_3")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -268,17 +290,27 @@ class Ui_MainWindow(object):
         MainWindow.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.toolBar)
 
         self.menubar.addAction(self.menu_import.menuAction())
+        self.menubar.addAction(self.menu_3.menuAction())
         self.menubar.addAction(self.menu_check.menuAction())
         self.menubar.addAction(self.menu.menuAction())
         self.menubar.addAction(self.menu_2.menuAction())
         self.menu_import.addAction(self.action_import_images)
+        self.menu_import.addAction(self.action_import_folder)
+        self.menu_import.addSeparator()
         self.menu_import.addAction(self.action_import_models)
         self.menu_check.addAction(self.action_check_infos)
         self.menu.addAction(self.action_analysis_report)
         self.menu.addAction(self.action_set_analysis_path)
         self.menu_2.addAction(self.action_summon_report)
         self.menu_2.addAction(self.action_set_summon_path)
+        self.menu_3.addAction(self.action_prev_image)
+        self.menu_3.addAction(self.action_next_image)
         self.toolBar.addAction(self.action_import_images)
+        self.toolBar.addAction(self.action_import_folder)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.action_prev_image)
+        self.toolBar.addAction(self.action_next_image)
+        self.toolBar.addSeparator()
         self.toolBar.addAction(self.action_import_models)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.action_check_infos)
@@ -286,6 +318,7 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.action_analysis_report)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.action_summon_report)
+        self.toolBar.addSeparator()
 
         self.retranslateUi(MainWindow)
 
@@ -296,7 +329,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u5f69\u667a\u5feb\u8b66\u2014\u2014\u667a\u6167\u5f69\u8d85\u8f85\u52a9\u7cfb\u7edf", None))
         self.action_import_images.setText(QCoreApplication.translate("MainWindow", u"\u5bfc\u5165\u56fe\u50cf", None))
         self.action_import_models.setText(QCoreApplication.translate("MainWindow", u"\u5bfc\u5165\u6a21\u578b", None))
 #if QT_CONFIG(tooltip)
@@ -307,6 +340,9 @@ class Ui_MainWindow(object):
         self.action_summon_report.setText(QCoreApplication.translate("MainWindow", u"\u751f\u6210\u62a5\u544a", None))
         self.action_set_analysis_path.setText(QCoreApplication.translate("MainWindow", u"\u8bbe\u7f6e\u89e3\u6790\u751f\u6210\u6587\u4ef6\u5939\u8def\u5f84", None))
         self.action_set_summon_path.setText(QCoreApplication.translate("MainWindow", u"\u8bbe\u7f6e\u751f\u6210\u62a5\u544a\u8def\u5f84", None))
+        self.action_import_folder.setText(QCoreApplication.translate("MainWindow", u"\u5bfc\u5165\u6587\u4ef6\u5939", None))
+        self.action_next_image.setText(QCoreApplication.translate("MainWindow", u"\u4e0b\u4e00\u5f20\u56fe\u50cf", None))
+        self.action_prev_image.setText(QCoreApplication.translate("MainWindow", u"\u4e0a\u4e00\u5f20\u56fe\u50cf", None))
         self.label_display.setText("")
         self.btn_load_model.setText(QCoreApplication.translate("MainWindow", u"\u5bfc\u5165\u6a21\u578b", None))
         self.btn_load_image.setText(QCoreApplication.translate("MainWindow", u"\u5bfc\u5165\u56fe\u50cf", None))
@@ -325,6 +361,7 @@ class Ui_MainWindow(object):
         self.menu_check.setTitle(QCoreApplication.translate("MainWindow", u"\u67e5\u770b", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u89e3\u6790", None))
         self.menu_2.setTitle(QCoreApplication.translate("MainWindow", u"\u751f\u6210", None))
+        self.menu_3.setTitle(QCoreApplication.translate("MainWindow", u"\u5bfc\u822a", None))
         self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
     # retranslateUi
 

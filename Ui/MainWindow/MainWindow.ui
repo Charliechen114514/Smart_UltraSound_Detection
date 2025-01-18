@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>彩智快警——智慧彩超辅助系统</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
@@ -370,6 +370,8 @@
      <string>导入</string>
     </property>
     <addaction name="action_import_images"/>
+    <addaction name="action_import_folder"/>
+    <addaction name="separator"/>
     <addaction name="action_import_models"/>
    </widget>
    <widget class="QMenu" name="menu_check">
@@ -392,7 +394,15 @@
     <addaction name="action_summon_report"/>
     <addaction name="action_set_summon_path"/>
    </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>导航</string>
+    </property>
+    <addaction name="action_prev_image"/>
+    <addaction name="action_next_image"/>
+   </widget>
    <addaction name="menu_import"/>
+   <addaction name="menu_3"/>
    <addaction name="menu_check"/>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
@@ -409,6 +419,11 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_import_images"/>
+   <addaction name="action_import_folder"/>
+   <addaction name="separator"/>
+   <addaction name="action_prev_image"/>
+   <addaction name="action_next_image"/>
+   <addaction name="separator"/>
    <addaction name="action_import_models"/>
    <addaction name="separator"/>
    <addaction name="action_check_infos"/>
@@ -416,6 +431,7 @@
    <addaction name="action_analysis_report"/>
    <addaction name="separator"/>
    <addaction name="action_summon_report"/>
+   <addaction name="separator"/>
   </widget>
   <action name="action_import_images">
    <property name="icon">
@@ -496,6 +512,48 @@
    </property>
    <property name="text">
     <string>设置生成报告路径</string>
+   </property>
+  </action>
+  <action name="action_import_folder">
+   <property name="icon">
+    <iconset resource="../../sources/icons.qrc">
+     <normaloff>:/icons/toolbar/toolbars/import_with_folder.png</normaloff>:/icons/toolbar/toolbars/import_with_folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>导入文件夹</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="action_next_image">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../sources/icons.qrc">
+     <normaloff>:/icons/toolbar/toolbars/next.png</normaloff>:/icons/toolbar/toolbars/next.png</iconset>
+   </property>
+   <property name="text">
+    <string>下一张图像</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="action_prev_image">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../sources/icons.qrc">
+     <normaloff>:/icons/toolbar/toolbars/prev.png</normaloff>:/icons/toolbar/toolbars/prev.png</iconset>
+   </property>
+   <property name="text">
+    <string>上一张图像</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
  </widget>
