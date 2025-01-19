@@ -16,6 +16,9 @@ class ReportGeneratorIMPL:
         self.__saving_path = pth.join(_dir, ReportGeneratorIMPL.MIDDLE_NAME + pic_file_name + ".docx")
         return self
 
+    def saving_path(self):
+        return self.__saving_path
+
     def set_image_path(self, path: str):
         self.__image_path = path
         return self

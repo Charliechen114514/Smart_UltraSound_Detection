@@ -1,6 +1,7 @@
 from Core.OCR.ImageOCR import OCRTextCore
 from Core.AnalysisReport.DocxGeneraterImpl import DocxGenerator_IMPL
-from Core.AnalysisReport.ReportAnalysisCore import ReportAnalysisCore
+from Core.Common.path_utils import PathUtils
+from loguru import logger
 import os
 
 class NoneImageException(Exception):
@@ -29,16 +30,20 @@ class AnalysisReportHandler:
         self.__analysis_folder = path
 
     def gain_gen_path(self) -> str:
-        return os.path.join(self.__analysis_folder, self.__handling_report_image)
+        baseName = PathUtils.gain_names_from_paths([self.__handling_report_image])[0]
+        return os.path.join(self.__analysis_folder, f"{baseName}-解析报告.docx")
 
     def analysis_report(self):
         if self.__handling_report_image == "":
             raise NoneImageException()
         strings = OCRTextCore.get_text_from_image_for_params(\
             self.__handling_report_image)['text'].strip().replace(",", ".").replace(" ", "")
+        advice = OCRTextCore.get_text_from_image_for_suggestions(
+            self.__handling_report_image)['text'].strip().replace(",", ".").replace(" ", "")
         docx_impl = DocxGenerator_IMPL(strings)
         docx_impl.set_path(self.gain_gen_path())
-        docx_impl.set_advice(strings)
+        logger.info(f"Report will be generate {self.gain_gen_path()}")
+        docx_impl.set_advice(advice)
         docx_impl.create_docx_sources()
         try:
             docx_impl.save_docx()

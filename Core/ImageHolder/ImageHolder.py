@@ -26,6 +26,10 @@ class ImageHolder:
     def image_list(self) -> list[str]:
         return self.__imageList
     
+    def remove_by_paths(self, target: list[str]):
+        logger.trace(f"will remove the {target} in image holder!")
+        self.__imageList = list(set(self.__imageList) - set(target))
+
     def remove_by_name(self, target: list[str]):
         _paths = PathUtils.get_path_from_base_name(names=target, paths=self.__imageList)
         logger.trace(f"will remove the {_paths} in image holder!")
@@ -65,6 +69,9 @@ class ImageHolder:
         if len(self.__imageList) == 0:
             raise "Error for the Empty set imageList operations"
         return self.__imageList[self.__current_index]
+
+    def clear(self):
+        self.__imageList.clear()
 
     def __check_image_list_for_debug(self):
         logger.trace("check the image lists: ")

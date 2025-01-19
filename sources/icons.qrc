@@ -10,12 +10,14 @@
         <file>toolbars/import_with_folder.png</file>
         <file>toolbars/next.png</file>
         <file>toolbars/prev.png</file>
+        <file>toolbars/clear_images.png</file>
     </qresource>
     <qresource prefix="/icons/pagetables">
         <file>pagetables/preload.png</file>
         <file>pagetables/summon_document.png</file>
         <file>pagetables/analysis_report.png</file>
         <file>pagetables/settings.png</file>
+        <file>pagetables/check_infos.png</file>
         <file>pagetables/import_with_folder.png</file>
         <file>pagetables/recognize.png</file>
     </qresource>

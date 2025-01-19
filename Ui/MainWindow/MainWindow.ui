@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>835</width>
-    <height>711</height>
+    <width>1109</width>
+    <height>905</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>彩智快警——智慧彩超辅助系统</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonStyle::ToolButtonTextBesideIcon</enum>
@@ -22,7 +25,81 @@
      <widget class="QWidget" name="widget_select_picture" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QListWidget" name="listWidget_selections"/>
+        <widget class="QListWidget" name="listWidget_selections">
+         <property name="styleSheet">
+          <string notr="true">QListWidget {
+    background-color: #f4f8fd; /* 背景颜色：淡蓝色 */
+    border: 2px solid #a3c2f5; /* 边框颜色：深蓝色 */
+    border-radius: 12px; /* 圆角效果 */
+    font-size: 14px;
+    color: #4682B4; /* 默认文本颜色：深蓝色 */
+    padding: 8px;
+    outline: none;
+}
+
+QListWidget::item {
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 8px 16px;
+    margin: 4px;
+    font-size: 14px;
+    color: #4682B4; /* 项目项的文本颜色 */
+}
+
+QListWidget::item:selected {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                                stop:0 rgba(135, 206, 250, 255), 
+                                stop:1 rgba(0, 191, 255, 255)); /* 选中项的渐变背景 */
+    color: white; /* 选中项的文本颜色 */
+    border-radius: 8px;
+    border: 2px solid #3399ff; /* 增加边框突出选中项 */
+}
+
+QListWidget::item:hover {
+    background-color: #b3d9ff; /* 悬停项的背景：浅蓝色 */
+    color: #0066cc; /* 悬停项的文本颜色 */
+    border-radius: 8px;
+}
+
+QListWidget::item:focus {
+    border: 2px solid #3399ff; /* 焦点项的边框颜色 */
+}
+
+QScrollBar:vertical, QScrollBar:horizontal {
+    border: none;
+    background: #f4f8fd;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    margin: 5px;
+}
+
+QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
+    background: #80c4ff;
+    border-radius: 6px;
+    min-height: 20px;
+}
+
+QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+    background: #3399ff; /* 滚动条悬停时背景：亮蓝色 */
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    background: transparent;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical,
+QScrollBar::left-arrow:horizontal, QScrollBar::right-arrow:horizontal {
+    background: transparent;
+}
+
+QListWidget QScrollBar {
+    margin: 6px;
+}
+</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -45,16 +122,100 @@
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="QToolBox" name="operate_tool_box">
+         <property name="styleSheet">
+          <string notr="true">QToolBox {
+    background-color: #f4f8fd; /* 背景颜色：淡蓝色 */
+    border: 2px solid #a3c2f5; /* 边框颜色：深蓝色 */
+    border-radius: 12px; /* 圆角效果 */
+    font-size: 12px; /* 恢复字体大小为 12px */
+    color: #4682B4; /* 默认文本颜色：深蓝色 */
+    padding: 10px;
+    outline: none;
+}
+
+QToolBox::tab-bar {
+    alignment: center;
+    margin: 4px;
+}
+
+QToolBox::tab:hover {
+    background-color: #b3d9ff; /* 标签悬停时背景：浅蓝色 */
+    color: #0066cc; /* 标签悬停时文字：深蓝色 */
+}
+
+QToolBox::tab:selected {
+    background-color: #80c4ff; /* 选中标签的背景：亮蓝色 */
+    color: white; /* 选中标签的文字：白色 */
+    border: 2px solid #3399ff; /* 选中标签的边框颜色：亮蓝色 */
+    border-radius: 8px;
+}
+
+QToolBox::panel {
+    background-color: #f4f8fd; /* 面板背景：淡蓝色 */
+    border: 2px solid #a3c2f5; /* 面板边框：深蓝色 */
+    border-radius: 12px; /* 面板圆角 */
+    padding: 10px;
+    margin-top: 0px; /* 避免折叠后产生不必要的上边距 */
+}
+
+QToolBox::page {
+    background-color: #f4f8fd; /* 页面背景：淡蓝色 */
+    border-radius: 10px; /* 页面圆角 */
+    padding: 8px 15px; /* 调整内边距，避免遮挡 */
+    color: #4682B4; /* 页面文字颜色：深蓝色 */
+}
+
+QLabel {
+    color: #4682B4; /* 标签文字颜色：深蓝色 */
+    font-size: 14px; /* 调整标签文字大小为 14px */
+    padding: 10px;
+    background-color: #e6f2ff; /* 标签背景颜色：淡蓝色 */
+    border-radius: 8px; /* 圆角效果 */
+}
+
+QLabel:hover {
+    background-color: #b3d9ff; /* 悬停时背景：浅蓝色 */
+    color: #0066cc; /* 悬停时文字颜色：深蓝色 */
+}
+
+QPushButton {
+    background-color: #b3d9ff; /* 按钮背景颜色：淡蓝色 */
+    border: 2px solid #66a3ff; /* 按钮边框颜色：浅蓝色 */
+    border-radius: 12px; /* 按钮圆角 */
+    padding: 10px 18px; /* 调整按钮内边距 */
+    font-size: 14px; /* 按钮文字大小：14px */
+    color: #333333; /* 按钮文字颜色：深色 */
+}
+
+QPushButton:hover {
+    background-color: #80c4ff; /* 悬停时背景颜色：亮蓝色 */
+    border: 2px solid #3399ff; /* 悬停时边框颜色：亮蓝色 */
+    color: #ffffff; /* 悬停时文字颜色：白色 */
+}
+
+QPushButton:pressed {
+    background-color: #3399ff; /* 按钮被按下时的背景：亮蓝色 */
+    border: 2px solid #66a3ff; /* 被按下时的边框颜色 */
+    color: white; /* 按钮文字颜色：白色 */
+}
+
+QPushButton:disabled {
+    background-color: #e0e0e0; /* 禁用时的背景：灰色 */
+    color: #a9a9a9; /* 禁用时的文字颜色：灰色 */
+    border: 2px solid #d0d0d0; /* 禁用时的边框：灰色 */
+}
+</string>
+         </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="page">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>183</width>
-            <height>468</height>
+            <width>134</width>
+            <height>136</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -132,8 +293,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>183</width>
-            <height>468</height>
+            <width>212</width>
+            <height>306</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -237,8 +398,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>190</width>
-            <height>456</height>
+            <width>226</width>
+            <height>502</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -368,6 +529,26 @@
              </property>
             </spacer>
            </item>
+           <item>
+            <widget class="QPushButton" name="btn_summon_select_multi">
+             <property name="text">
+              <string>多选列表文件</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_12">
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="page_4">
@@ -375,8 +556,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>88</width>
-            <height>52</height>
+            <width>228</width>
+            <height>638</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -384,18 +565,62 @@
             <normaloff>:/icons/pagetables/pagetables/recognize.png</normaloff>:/icons/pagetables/pagetables/recognize.png</iconset>
           </attribute>
           <attribute name="label">
-           <string>图像识别</string>
+           <string>语音服务</string>
           </attribute>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
             <widget class="QWidget" name="widget_param_browsing" native="true">
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
-               <widget class="QLabel" name="label_param">
+               <widget class="QLabel" name="label_soundinfo">
                 <property name="text">
-                 <string>参数说明</string>
+                 <string>语音服务结果：</string>
                 </property>
                </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_check_indications">
+                <property name="text">
+                 <string>查看指引...</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../sources/icons.qrc">
+                  <normaloff>:/icons/toolbar/toolbars/check_infos.png</normaloff>:/icons/toolbar/toolbars/check_infos.png</iconset>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_10">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_audio_control">
+                <property name="text">
+                 <string>开始录音</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_11">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
             </widget>
@@ -414,7 +639,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>835</width>
+     <width>1109</width>
      <height>33</height>
     </rect>
    </property>
@@ -426,6 +651,8 @@
     <addaction name="action_import_folder"/>
     <addaction name="separator"/>
     <addaction name="action_import_models"/>
+    <addaction name="separator"/>
+    <addaction name="action_clear"/>
    </widget>
    <widget class="QMenu" name="menu_check">
     <property name="title">
@@ -445,6 +672,7 @@
      <string>生成</string>
     </property>
     <addaction name="action_summon_report_for_current"/>
+    <addaction name="action_summon_selectMulti"/>
     <addaction name="action_summon_report_for_all"/>
     <addaction name="action_set_summon_path"/>
    </widget>
@@ -482,6 +710,7 @@
    <addaction name="separator"/>
    <addaction name="action_check_infos"/>
    <addaction name="separator"/>
+   <addaction name="action_clear"/>
   </widget>
   <action name="action_import_images">
    <property name="icon">
@@ -523,6 +752,9 @@
    </property>
   </action>
   <action name="action_analysis_report">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../sources/icons.qrc">
      <normaloff>:/icons/toolbar/toolbars/analysis_report.png</normaloff>:/icons/toolbar/toolbars/analysis_report.png</iconset>
@@ -619,6 +851,33 @@
    </property>
    <property name="text">
     <string>为列表所有项目生成报告</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="action_summon_selectMulti">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../sources/icons.qrc">
+     <normaloff>:/icons/toolbar/toolbars/summon_document.png</normaloff>:/icons/toolbar/toolbars/summon_document.png</iconset>
+   </property>
+   <property name="text">
+    <string> 多选列表文件进行报告生成</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="action_clear">
+   <property name="icon">
+    <iconset resource="../../sources/icons.qrc">
+     <normaloff>:/icons/toolbar/toolbars/clear_images.png</normaloff>:/icons/toolbar/toolbars/clear_images.png</iconset>
+   </property>
+   <property name="text">
+    <string>清空</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>

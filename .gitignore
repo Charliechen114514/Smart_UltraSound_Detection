@@ -127,6 +127,9 @@ celerybeat.pid
 # Private configurations
 Core/config/config.ini
 
+# Audios
+Core/Audio/vosk-model-small-cn-0.22
+
 # test sources
 tests/other_test_sources
 tests/result

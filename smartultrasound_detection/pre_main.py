@@ -3,6 +3,11 @@ import shutil
 from loguru import logger
 from configparser import ConfigParser
 from Core.config.config_keys import *
+import tools.download as dwload
+
+# 运行前配置
+accept_non_ssl: bool = False
+download_audio_url = "https://alphacephei.com/vosk/models/vosk-model-small-cn-0.22.zip"
 
 # 运行时配置
 config_file_path: str = 'Core/config/config.ini'
@@ -52,3 +57,26 @@ if not check_ini_file(config_file_path):
     logger.warning("original ini file corrupted! reset to the initial state...")
     copy_blank_config_file()
 logger.info("pre-Building for ini file check done!")
+
+# 检查是否存在vosk语音包
+logger.info("Checking the runtime full dependencies")
+if not PathUtils.check_paths_if_exsit("Core/Audio/vosk-model-small-cn-0.22"):
+    logger.error("Audio Package is not exsited, fetching from remote...")
+    logger.info("pre-Building for the tmp")
+    PathUtils.create_dirent_if_not_exsited(PathUtils.TMP_PATH)
+    logger.info("pre-Building for the tmp done")
+    logger.info("Start issuing the download...")
+
+    logger.info("Download the Audio Server required")
+    result = dwload.download_and_extract(
+        download_audio_url, 
+        PathUtils.TMP_PATH,
+        "Core/Audio/"
+    )
+    if result:
+        logger.info("Issue down")
+    else:
+        logger.error("As the audio server is unable to access, Audio Server is disabled...")
+else:
+    logger.info("Audio Server is expected!")
+    

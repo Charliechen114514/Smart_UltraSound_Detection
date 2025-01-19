@@ -9,6 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 # ReStrict the usage as python 3.12, which is required
 python = ">=3.12 <3.13"
+certifi = {version = "^2024.12.14", source = "tsinghua"}
 
 [tool.poetry.group.pytorch.dependencies]
 torch = {version = "^2.5.1+cu124", source = "pytorch"}

@@ -11,6 +11,11 @@ files = [
     {file = "certifi-2024.12.14.tar.gz", hash = "sha256:b650d30f370c2b724812bee08008be0c4163b163ddaec3f2546c1caf65f191db"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+reference = "tsinghua"
+
 [[package]]
 name = "cffi"
 version = "1.17.1"
@@ -1481,4 +1486,4 @@ train = []
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12 <3.13"
-content-hash = "ff6e4194c096d22439c0ac52b6ff225594c90e720ada1a3545063a2662f20351"
+content-hash = "50a58c425043f018743f749da3f6b9e7d07a8ee765de7fba94fdf1b8a4b78cfe"

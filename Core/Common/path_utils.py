@@ -6,6 +6,7 @@ from loguru import logger
 class PathUtils:
     MIDDLEWARES_ROOT = "runtimes_middlewares"
     RC_PATH = os.path.join(MIDDLEWARES_ROOT, "rc_py")
+    TMP_PATH = os.path.join(MIDDLEWARES_ROOT, "tmp")
     SPLIT_PATH = os.path.join(MIDDLEWARES_ROOT, "splits")
     """
         This help gains the images that is support in
@@ -36,6 +37,10 @@ class PathUtils:
     @staticmethod
     def gain_names_from_paths(paths: list[str]) -> list[str]:
         return [Path(path).stem for path in paths]
+
+    @staticmethod
+    def gain_name_from_path(path: str) -> str:
+        return Path(path).stem
 
     """
         check the exsitance

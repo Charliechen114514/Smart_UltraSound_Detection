@@ -4,6 +4,12 @@ param (
 
 switch ($command) {
     # Open the designer 
+    "--setup" {
+        Write-Host "Setup the neccessities"
+        poetry install
+        Write-Host "Setup the neccessities down"
+    }
+
     "--open_designer" {
         Write-Host "Opening Designer..."
         poetry run python .\dev_tools\open_designer.py
@@ -12,9 +18,16 @@ switch ($command) {
     # summon the ui file
     "--summon_uipy" {
         Write-Host "transforming the ui files..."
+        Write-Host "transforming the MainWindow ui file..."
         poetry run python .\dev_tools\transfer_to_uipy.py .\Ui\MainWindow\MainWindow.ui
+        Write-Host "transforming the Browse Guide ui file..."
         poetry run python .\dev_tools\transfer_to_uipy.py .\Ui\BrowsingGuide\BrowsingGuide.ui
+        Write-Host "transforming the InfoWindow ui file..."
         poetry run python .\dev_tools\transfer_to_uipy.py .\Ui\InfoWindow\InfoWindow.ui
+        Write-Host "transforming the ProcessingWindow ui file..."
+        poetry run python .\dev_tools\transfer_to_uipy.py .\Ui\ProcessingWindow\ProcessiongWindow.ui
+        Write-Host "transforming the SelectiveWindow ui file..."
+        poetry run python .\dev_tools\transfer_to_uipy.py .\Ui\SelectiveWindow\SelectiveWindow.ui
         Write-Host "transforming the ui files done!"
     }
 
@@ -69,6 +82,7 @@ switch ($command) {
     "Usage: devtools.ps1 [OPTIONS]
 
     Options:
+        --setup                Setup the environment, which will install the dependencies automatically
         --open_designer        Open Designer and launch the Designer application.
         --summon_uipy          Summon UI from the .ui file and transform it into the UI Python code.
         --run                  Run the main application directly.

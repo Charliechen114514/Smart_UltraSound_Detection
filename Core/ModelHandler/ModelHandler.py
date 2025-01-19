@@ -26,6 +26,7 @@ class ModelHandler(QObject):
         super().__init__(parent)
         self.__holding_model = ""
         self.__imagewave_parser = ImageWavePraser()
+        self.cached_result: list[bool] = []
         
     @property
     def holding_model(self):
@@ -41,11 +42,8 @@ class ModelHandler(QObject):
             self.__imagewave_parser.write_path = middle_save
         
 
-    def do_execute_check(self, image_paths: list[str]) -> list[bool]:
-        result: list[bool] = []
-        for each_image in image_paths:
-            result.append(self.__do_execute_for_one(each_image))
-        return result
+    def do_execute_check(self, image_path: str) -> bool:
+        return self.__do_execute_for_one(image_path)
 
 
     """
@@ -74,7 +72,8 @@ class ModelHandler(QObject):
                 test_prediction = activate_model(data.cuda())
                 test_label = np.argmax(test_prediction.cpu().data.numpy(), axis=1)
                 for y in test_label:
-                    prediction.append(bool(y))       
-
-        return 2 * sum(prediction) >= len(prediction)
+                    prediction.append(bool(y))    
+        result = 2 * sum(prediction) >= len(prediction)   
+        self.cached_result.append(result)
+        return result
     

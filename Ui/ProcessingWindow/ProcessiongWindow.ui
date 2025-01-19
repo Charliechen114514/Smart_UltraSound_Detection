@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProcessingWindow</class>
+ <widget class="QMainWindow" name="ProcessingWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>810</width>
+    <height>670</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>报告进度</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QWidget" name="widget_detection" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label_recognize_info">
+         <property name="text">
+          <string>当前识别进度</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="recognize_progressBar">
+         <property name="styleSheet">
+          <string notr="true">QProgressBar {
+    text-align: center;
+    height: 30px;
+    border-radius: 15px;
+    background: #e6f2ff;  /* 背景颜色：淡蓝色 */
+    border: 2px solid #a3c2f5;  /* 边框颜色：深一些的蓝色 */
+    padding: 2px;
+}
+
+QProgressBar::chunk {
+    border-radius: 15px;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                                stop:0 rgba(173, 216, 230, 255), 
+                                stop:0.5 rgba(135, 206, 250, 255), 
+                                stop:1 rgba(0, 191, 255, 255));  /* 淡蓝色到亮蓝色的渐变 */
+    margin: 0px;
+}
+
+QProgressBar:focus {
+    border: 2px solid #3399ff;  /* 获得焦点时的边框颜色 */
+}
+
+QPushButton {
+    background-color: #b3d9ff;
+    border: 2px solid #66a3ff;
+    border-radius: 10px;
+    padding: 10px;
+    color: #333333;
+    font-size: 16px;
+}
+
+QPushButton:hover {
+    background-color: #80c4ff;
+}
+</string>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_show_recognize_left">
+         <property name="text">
+          <string>0 | 0</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="widget_detection_2" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_summon_info">
+         <property name="text">
+          <string>当前报告生成进度</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="summon_progressBar">
+         <property name="styleSheet">
+          <string notr="true">QProgressBar {
+    text-align: center;
+    height: 30px;
+    border-radius: 15px;
+    background: #e6f2ff;  /* 背景颜色：淡蓝色 */
+    border: 2px solid #a3c2f5;  /* 边框颜色：深一些的蓝色 */
+    padding: 2px;
+}
+
+QProgressBar::chunk {
+    border-radius: 15px;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                                stop:0 rgba(173, 216, 230, 255), 
+                                stop:0.5 rgba(135, 206, 250, 255), 
+                                stop:1 rgba(0, 191, 255, 255));  /* 淡蓝色到亮蓝色的渐变 */
+    margin: 0px;
+}
+
+QProgressBar:focus {
+    border: 2px solid #3399ff;  /* 获得焦点时的边框颜色 */
+}
+
+QPushButton {
+    background-color: #b3d9ff;
+    border: 2px solid #66a3ff;
+    border-radius: 10px;
+    padding: 10px;
+    color: #333333;
+    font-size: 16px;
+}
+
+QPushButton:hover {
+    background-color: #80c4ff;
+}
+</string>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_summon_show_left">
+         <property name="text">
+          <string>0 | 0</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextBrowser" name="result_show">
+      <property name="styleSheet">
+       <string notr="true">QTextBrowser {
+    border: 2px solid #B0C4DE;
+    border-radius: 10px;
+    background: #F0F8FF;
+    color: #4682B4;
+    font-size: 14px;
+    padding: 10px;
+    selection-background-color: #87CEEB;
+    selection-color: white;
+}
+
+QTextBrowser:disabled {
+    background: #E0FFFF;
+    color: #A9A9A9;
+    border: 2px solid #A9A9A9;
+}
+
+QTextBrowser:focus {
+    border: 2px solid #ADD8E6;
+}
+</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="widget_operate" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="btn_continue_summon_report">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    border: 2px solid #B0C4DE;
+    border-radius: 10px;
+    background: #F0F8FF;
+    color: #4682B4;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 6px 12px;
+    text-align: center;
+    cursor: pointer;
+}
+
+QPushButton:hover {
+    background: #E0FFFF;
+    border: 2px solid #87CEEB;
+}
+
+QPushButton:pressed {
+    background: #87CEEB;
+    border: 2px solid #4682B4;
+    color: white;
+}
+
+QPushButton:disabled {
+    background: #E0FFFF;
+    color: #A9A9A9;
+    border: 2px solid #A9A9A9;
+}
+
+QPushButton:focus {
+    border: 2px solid #ADD8E6;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>生成报告</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>810</width>
+     <height>33</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

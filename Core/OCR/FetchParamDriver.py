@@ -1,4 +1,5 @@
 import cv2
+import os
 import numpy as np
 import pytesseract
 
@@ -48,6 +49,7 @@ class FetchParamDriver:
         return src
 
     def __recognizeText(self, roi):
+        os.environ["TESSDATA_PREFIX"] = "Core/OCR/tessdata"
         custom_config = r'--psm 6 -c tessedit_char_whitelist=0123456789'
         ocr = pytesseract.image_to_string(roi, lang='anums', config=custom_config)
         return ocr
